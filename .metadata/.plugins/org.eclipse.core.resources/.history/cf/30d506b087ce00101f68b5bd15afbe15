@@ -1,0 +1,16 @@
+package com.kh.spring.member.model.service;
+
+public interface MemberService {
+	
+	//로그인 기능 (SELECT)
+	
+	//회원가입 기능 (INSERT)
+	
+	//회원 정보 수정 (UPDATE)
+	
+	//회원 탈퇴 기능 (UPDATE / DELETE)
+	
+	//아이디 중복 확인 기능 (SELECT)
+	
+
+}

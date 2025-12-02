@@ -1,0 +1,9 @@
+package com.kh.spring.member.model.dao;
+
+import org.springframework.stereotype.Repository;
+
+//@Repository : 저장소 (주로 DB저장소와 관련된 처리를 하는 영역) 
+@Repository
+public class MemberDao {
+
+}

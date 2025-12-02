@@ -1,0 +1,416 @@
+package com.kh.spring.member.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.spring.member.model.service.MemberService;
+import com.kh.spring.member.model.vo.Member;
+
+
+//Controller 타입의 어노테이션을 부여하면 spring이 component scan을 통해 Controller bean으로 등록한다. 
+@Controller // 컨트롤러 어노테이션 안에 컴포넌트가 있어서 컴포넌트 스캔 완료.
+public class MemberController {
+	
+	//사용할 Service 객체를 선언해놓고 스프링이 관리 할 수 있도록 처리
+	//기존방식
+	//private MemberService service = new MemberServiceImpl(); <- 의존성 매우 높음
+	/*
+	 * 기존 객체 생성 방식
+	 * 객체간의 결합도가 높다(소스코드의 수정이 일어날 경우 해당 객체에 대해서 수정작업 처리를 해야함, 구체적인 것에 의존함)
+	 * 서비스가 동시에 많은 횟수가 요청될 경우 그만큼 객체 생성이 발생됨. 
+	 * 
+	 * spring에선 DI(Dependency Injection)을 이용한 방식으로
+	 * 객체의 생명주기를 관리한다.(객체간의 결합도를 낮춰준다)
+	 * new라는 생성 키워드 없이 선언문과 @Autowired 라는 어노테이션을 부여함으로
+	 * 스프링이 해당 Bean을 관리 할 수 있도록 한다.
+	 * 
+	 * 스프링 빈들은 싱글톤 패턴이라 하나의 객체만 존재.
+	 * 
+	 * @Autowired : 스프링이 bean을 자동 주입 할 수 있도록 하는 어노테이션 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
+	@Autowired // 의존성을 낮춰야한다. 
+	private MemberService service; // 필드 주입 방식 
+	
+	//BcryptPasswordEncoder 사용하기 위해서 스프링에게 주입 처리 하기
+	@Autowired
+	private BCryptPasswordEncoder bcrypt; // secutiry-context.xml 파일 확인 
+	
+	
+	
+	/*
+	 * Spring에서 파라미터(요청시 전달값)를 받아 주는 방법 
+	 * 
+	 * 1.HttpServletRequest 객체 이용 (기존 jsp/servlet방식)
+	 * 요청을 처리하는 메소드의 매개변수에 필요한 객체를 입력하면 spring이 메소드 호출 시 자동으로 해당 객체를
+	 * 생성하여 주입해준다. 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	/*
+	//@RequestMapping("매핑주소") : 요청시 입력한 매핑주소를 받아주는 어노테이션 (localhost:8080/컨텍스트루트)여서 /를 적어줘야함.
+	//RequestMapping은 컨텍스트루트까지가 디폴트라 경로를 작성할때 상대 경로의 개념이 없음.
+	@RequestMapping("/login.me")
+	public String loginMember(HttpServletRequest request) {
+	   String userId = request.getParameter("userId");
+	   String userPwd = request.getParameter("userPwd");
+	   
+	   System.out.println(userId);
+	   System.out.println(userPwd);
+	   
+	   //요청에 대한 응답 처리는 문자열로 작성할 수 있다.
+	   //요청 위임시 작성된 경로에 viewResolver가 앞쪽엔 /WEB-INF/views/ 경로를
+	   //뒤쪽엔 .jsp 경로를 붙여주기 때문에 그 사이에 있는 부분만 작성하면 된다.
+	   //만약 재요청(redirect)방식을 한다면 "redirect:경로" 와 같이 작성한다.
+	   
+	   //요청 위임방식 
+	   //return "main"; // /WEB-INF/views/main.jsp로 요청되는 것. 
+	   
+	   return "redirect:/"; // 이때 / 는 redirect에서 /는 컨텍스트 루트 기준으로 시작된다. (절대경로)
+	   //절대경로로 바뀌니까 당연히 localhost:8080/컨텍스트루트/ 이렇게 멈춤
+	   
+	   //근데 만약에 redirect:로 작성하면 상대경로 개념이라 localhost:8080/컨텍스트루트/login.me 이렇게 남음.
+	   
+	   
+	   
+		
+	}
+	*/
+	
+	
+	/*
+	 * 2. @RequestParam 어노테이션 이용
+	 * request.getParameter("키")로 값을 추출하는 역할을 대신 수행하는 어노테이션
+	 * value 속성의 값으로 jsp에서 작성했던 name 속성값을 담으면 해당 매개변수로 받아 올 수 있다.
+	 * 만약 전달된 값이 비어있는 상태라면 defaultValue 속성으로 기본값을 지정해 줄 수 있다.
+	 * defaultValue="문자열" - 값을 제시할땐 문자열로 제시하여야하고
+	 * 해당 매개변수에선 원하는 자료형으로 처리하면 된다.
+	 */
+	
+	/*
+	@RequestMapping("/login.me")
+	public String loginMember(@RequestParam(value="userId") String userId, 
+			                  @RequestParam(value="userPwd") String userPwd,
+			                  @RequestParam(value="currentPage",defaultValue="1") String currentPage) {
+		
+		//@RequestParam -> 자료형은 지정한 대로 받아줌 (복습할때 자료형 바꿔보기)
+		
+		System.out.println("userId : " + userId);
+		System.out.println("userPwd : " + userPwd);
+		System.out.println("currentPage : " + currentPage);
+		
+		return "redirect:/";
+	}
+	*/
+	
+	
+	/*
+	 * 3. @RequestParam 어노테이션을 생략하는 방법 (많이 사용함) 
+	 * 단, 매개변수명을 jsp의 name 속성값과 일치시켜야만 해당 데이터가 파싱된다.
+	 * 또한 어노테이션을 생략했기 때문에 defaultValue는 사용 할 수 없다.
+	 * 
+	 */
+	
+	/*
+	@RequestMapping("/login.me")
+	public String loginMember(String userId,String userPwd,String name) {
+		
+		System.out.println(userId+ " " + userPwd);
+		System.out.println("확인 : " + name); // 키값 찾지못하니 String의 기본값 null
+		
+		return "redirect:/";
+	}
+	*/
+	
+	/*
+	 * 4.커맨드 객체 방식
+	 * 해당 메소드의 매개변수로 요청시 전달값을 담고자 하는 VO를 세팅후
+	 * 요청시 전달값의 key값(jsp의 name속성값)을 VO에 각 필드명으로 작성하면
+	 * 스프링 컨테이너가 해당 객체를 기본 생성자로 생성 후 내부적으로 setter 메소드를 찾아
+	 * 요청시 전달값을 해당 필드에 담아서 반환해준다. 
+	 *
+	 * 반드시 name속성값과 필드명이 같아야한다. 
+	 * 
+	 * 요청 처리 후 응답 데이터를 담고 응답 페이지로 포워딩 또는 재요청 해보기
+	 * HttpSession이 필요하다면 매개변수에 작성 -> 스프링이 객체 주입해준다.
+	 * 
+	 * 응답뷰로 포워딩(위임)시 전달데이터 담을 수 있는 객체
+	 * 1.model
+	 * requestScope를 담당하는 객체로 key value 세트로 데이터를 담아서 전달할 수 있다.
+	 * 
+	 * 데이터 담는 메소드는 기존에 사용하던 setAttribute가 아닌 addAttribute이다. 
+	 * 
+	 * Spring MVC는 컨트롤러 메서드의 파라미터 중에 일반 클래스(JavaBean) 타입이 있으면 아래 조건을 만족하는 경우, 해당 객체를 자동으로 생성하고, 요청 파라미터 값을 바인딩해줍니다:
+     *
+	 *	✅ 조건:
+     *
+	 *	기본 생성자가 있어야 함 (public Member())
+     *
+	 *	setter 메서드 또는 public 필드가 있어야 함 (예: setId(), setPassword() 등)
+	 *
+	 * HttpSession도 빈으로 등록된건 아니지만 
+	 * 
+	 * ✅ 참고 꿀팁
+     *
+	 *	@Autowired나 @Bean, @Component 없이도 파라미터 주입 가능한 객체들이 있습니다.
+     *
+	 *	이들은 서블릿 기반 객체이거나 Spring Web이 제공하는 헬퍼 객체들입니다.
+	 *
+	 *  (Spring의 Web MVC 인프라가 요청마다 만들어주는 객체)
+	 * 
+	 */
+	
+	
+	@RequestMapping("/login.me")
+	public String loginMember(Member m, HttpSession session, Model model) {
+		
+		//전달받은 데이터로 데이터베이스 조회해오기
+		
+		//System.out.println(m);
+		//사용자가 입력한 비밀번호를 추출하여 사용자가 입력했던 비밀번호를 암호화한 암호문과 비교하여 
+		//암호문을 복호화했을때 입력한 평문이 나오는지 검증하는 메소드를 통해서 비밀번호를 확인한다. 
+		//Bcrypt는 암호화 된 암호문을 평문으로 반환해주지는 않는다. (검증 작업 처리만 해줌) 
+		//검증 메소드 : bcrypt.matches(평문,암호문) : 평문과 암호문을 비교하여 같으면 true 다르면 false
+		//암호문 변경 메소드 : bcrypt.encode(평문) : 암호문 문자열을 반환 
+		
+		//$2a$10$QxGUPHaO9g6GkEvcV0qgUOhZYI6ceDxjaGbqFOOa5SmaEQ8Xzr90O (암호화된 비밀번호)
+		//$2a$10$VIX1VrXn/51/WbwZWh0CSuR9ZlaFVfUOW6Mxpwkg1GgBWFtHK/.o6 
+		//암호화된건 매번 달라질 수 있다. 
+		
+		//System.out.println("사용자가 입력한 비밀번호평문 : " + m.getUserPwd());
+		//System.out.println("해당 비밀번호를 암호문으로 변경 : " + bcrypt.encode(m.getUserPwd()));
+		//System.out.println("두 구문이 같은지 : " + bcrypt.matches(m.getUserPwd(), bcrypt.encode(m.getUserPwd())));
+		
+		//전달받은 비밀번호를 아이디로 조회한 회원정보의 비밀번호와 복호화 검증을 했을때
+		//true가 나왔다면 로그인 성공! 메시지와 함께 로그인 정보 세션에 담기
+		//false라면 로그인 실패! 메시지와 함께 로그인 정보 세션에 담기 
+		//위 메시지는 session에 담아서 처리할것
+		//각각 메인페이지로 되돌리기 
+		//실패시 에러페이지로 포워딩
+		
+	
+		//String inputPwd = bcrypt.encode(m.getUserPwd());
+		
+		
+		//12월 2일 수업 과정 - 암호화된 비밀번호, 로그아웃, 마이페이지 데이터 조회 
+		
+			
+		Member loginMember = service.loginMember(m);
+		//위에 조회된 loginMember가 Null이 아닌 경우에만 비밀번호 검증 처리하기 ,xml파일에 비밀번호 같은거까지 처리하면 절대안나옴. (member-mapper.xml 파일 확인)
+		if(loginMember!=null && bcrypt.matches(m.getUserPwd(), loginMember.getUserPwd())) {
+			session.setAttribute("alertMsg", "로그인 성공!"); 
+			session.setAttribute("loginMember", loginMember);
+		} else {
+			session.setAttribute("alertMsg", "로그인 실패!"); 
+			return "common/errorPage";
+		}
+		
+		System.out.println(loginMember);
+		
+		
+			
+		
+		
+//		
+//		Member loginMember = service.loginMember(m);
+//		
+//		System.out.println(loginMember);
+		
+		
+		
+		return "redirect:/";
+	}
+	
+	//로그아웃
+	@RequestMapping("/logout.me")
+	public String logout(HttpSession session, HttpServletRequest request) {
+		
+		
+		//로그인된 회원정보 지워주기 
+		session.removeAttribute("loginMember");
+		
+		//이전경로 찾아오기
+		String path = request.getHeader("referer");
+		
+		//조건처리
+		if(path==null) {
+			return "redirect:/"; //메인페이지로
+		}
+		
+		return "redirect:"+path; 
+	}
+	
+	
+	/*
+	 * 1.model
+	 * requestScope를 담당하는 객체로 key value 세트로 데이터를 담아서 전달할 수 있다.
+	 * 
+	 * 데이터 담는 메소드는 기존에 사용하던 setAttribute가 아닌 addAttribute이다. 
+	 */
+	
+	
+	//마이페이지 이동
+	@RequestMapping("/mypage.me")
+	public String mypage(Model model) {
+		
+		//마이페이지로 이동시키기
+		model.addAttribute("alertMsg","모델로 데이터 넘기기");
+		
+		return "member/mypage";
+		
+	}
+	
+	//회원가입
+	@RequestMapping("/insert.me")
+	public String enrollForm(Member m, HttpSession session) {
+		
+		
+		
+		
+		
+		
+		return "member/memberEnrollForm";
+	}
+	
+
+}
+
+/*
+package com.kh.spring.member.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.spring.member.model.service.MemberService;
+import com.kh.spring.member.model.vo.Member;
+
+ 
+//Controller 타입의 어노테이션을 부르면 spring이 component scan을 통해 Controller bean으로 등록한다.
+@Controller // 컨트롤러 어노테이션 안에 컴포넌트가 있어서 컴포넌트 스캔 완료
+public class MemberController {
+
+   //사용할 Service 객체를 선언해놓고 스프링이 관리 할 수 있도록 처리
+   //기존방식
+   //private MemberService service = new MemberServiceImpl(); <- 의존성 매우 높음
+   기존 객체 생성 방식
+   객체간의 결합도가 높다(소스코드의 수정이 일어날 경우 해당 객체에 대해서 수정작업 처리를 해야함,구체적인 것에 의존)
+   서비스가 동시에 많은 횟수가 요청될 경우 그만큼 객체 생성이 발생됨. (메모리 낭비)
+   
+   spring에선 DI(Dependency Injection)을 이용한 방식으로
+   객체의 생명주기를 관리한다. (객체간의 결합도를 낮춰준다.)
+   new라는 생성 키워드 없이 선언문과 @Autowired 라는 어노테이션을 부여함으로
+   스프링이 해당 Bean을 관리 할 수 있도록 한다.
+   
+   그리고 스프링에 있는 빈 객체들은 싱글톤 패턴이라 객체가 유일함.
+   
+   @Autowired : 스프링이 bean을 자동 주입 할 수 있도록 하는 어노테이션
+   
+   @Autowired // 의존성을 낮춰야한다.
+   private MemberService service; // 필드 주입 방식
+   
+   spring에서 파라미터(요청시 전달값)을 받아 주는 방법
+   
+   1.HttpServletRequest 객체 이용 (기존 jsp/servlet 방식)
+   요청을 처리하는 메소드의 매개변수에 필요한 객체를 입력하면 spring이 메소드 호출 시
+   자동으로 해당 객체를 생성하여 주입해준다.
+   
+   //@RequestMapping("매핑주소") : 요청시 입력한 매핑주소를 받아주는 어노테이션
+   RequestMapping 앞에는 컨텍스트 루트가 디폴트로 있음.
+   즉, localhost:8080/컨텍스트루트 이런 구조임. 
+   @ReustMapping("/login.me")
+   public String loginMember(HttpServletRequest request) {
+     String userId = request.getParameter("userId");
+     String userPwd = request.getParameter("userPwd");
+     
+     System.out.println(userId);
+     System.out.println(userPwd);
+     
+     //요청에 대한 응답 처리는 문자열로 작성할 수 있다.
+     //요청 위임시 작성된 경로엔 viewResolver가 앞쪽엔 /WEB-INF/views 경로를
+     //뒤쪽엔 .jsp 경로를 붙여주기 때문에 그 사이에 있는 논리적인 경로 부분만 작성하면 된다.
+     //만약 재요청(redirect)방식을 한다면 "redirect:경로"와 같이 작성한다.
+     
+     //요청 위임 방식
+     // return "main"; //WEB-INF/views/main.jsp로 요청되는것.
+     
+     return "redirect:/"; // 이때 /는 redirect에서 /는 컨텍스트 루트 기준으로 시작된다. (절대경로의 개념)
+     
+      
+   }  
+   
+   2.@RequestParam 어노테이션 이용 
+   request.getParameter("키")로 값을 추출하는 역할을 대신 수행하는 어노테이션
+   value 속성의 값으로 jsp에서 작성했던 name 속성값을 담으면 해당 매개변수로 받아 올 수 있다.
+   만약 전달된 값이 비어있는 상태라면 defaultValue 속성으로 기본값을 지정해 줄 수 있다.
+   defaultValue="문자열" - 값을 제시할땐 문자열로 제시하여야하고
+   해당 매개변수에선 원하는 자료형으로 처리하면 된다.
+   
+   @RequestMapping("/login.me")
+   public String loginMember(@RequestParam(value="userId") String userId,
+                             @RequestParam(value="userPwd") String userPwd,
+                             @RequestParam(value="currentPage",defalutValue="1") String currentPage) {
+          
+           //@RequestParam -> 자료형은 지정한 대로 받아줌(복습할때 자료형 바꿔보기)
+           System.out.println("userId : " + userId);
+           System.out.println("userPwd : " + userPwd);
+           System.out.println("currentPage : " + currentPage);
+           
+       return "redirect:/";
+   }        
+   
+   3. @RequestParam 어노테이션을 생략하는 방법 (많이 사용함)
+   단, 매개변수명을 jsp의 name 속성값과 일치시켜야만 해당 데이터가 파싱된다.
+   또한 어노테이션을 생략했기 때문에 defaultValue는 사용 할 수 없다. 
+   
+   @RequestMapping("/login.me")
+   public String loginMember(String userId, String userPwd, String name) {
+     
+     System.out.println(userId + " " + userPwd);
+     System.out.println("확인 : " + name);
+     
+     return "redirect:/";
+   }
+   
+ 
+   4. 커맨드 객체 방식
+   해당 메소드의 매개변수로 요청시 전달값을 담고자 하는 VO를 세팅후
+   요청시 전달값의 key값(jsp의 name속성값)을 VO에 각 필드명으로 작성하면 
+   스프링 컨테이너가 해당 객체를 기본 생성자로 생성 후 내부적으로 setter 메소드를 찾아
+   요청시 전달값을 해당 필드에 담아서 반환해준다. 
+   
+   반드시 name 속성값과 필드명이 같아야한다.
+   
+   요청 처리 후 응답 데이터를 담고 응답 페이지로 포워딩 또는 재요청 해보기
+   HttpSession이 필요하다면 매개변수에 작성 -> 스프링이 객체 주입해준다.
+   
+   응답뷰로 포워딩(위임)시 전달데이터 담을 수 있는 객체 
+   
+   1.model
+   requestScope를 담당하는 객체로 key value 세트로 데이터를 담아서 전달할 수 있다.
+   
+   데이터 담는 메소드는 기존에 사용하던 setAttribute가 아닌 addAttribute이다.
+     
+                             
+                             
+   
+   
+   
+   
+
+*/

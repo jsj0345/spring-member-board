@@ -1,0 +1,56 @@
+
+12월 01, 2025 21:49:38.519 NEW SESSION
+12월 01, 2025 21:49:38.519 Created TensorFlow Lite XNNPACK delegate for CPU.
+12월 01, 2025 21:49:38.721 [13820:28908:1201/214938.717:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 01, 2025 21:50:01.595 [13820:28908:1201/215001.594:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 01, 2025 21:51:01.200 [13820:28908:1201/215101.200:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 01, 2025 21:51:30.424 [13820:28908:1201/215130.423:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 01, 2025 21:52:26.977 [13820:28908:1201/215226.977:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+
+12월 02, 2025 09:05:19.846 NEW SESSION
+12월 02, 2025 09:05:19.846 [10100:17624:1202/090519.841:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 02, 2025 09:05:20.47 [10100:17624:1202/090520.046:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 02, 2025 09:05:20.256 [10100:17624:1202/090520.255:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 02, 2025 09:05:23.544 Created TensorFlow Lite XNNPACK delegate for CPU.
+12월 02, 2025 09:46:27.408 [10100:29012:1202/094627.407:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 1 rejected by interface blink.mojom.WidgetHost
+12월 02, 2025 09:47:22.473 [10100:29012:1202/094722.473:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 5 rejected by interface blink.mojom.WidgetHost
+12월 02, 2025 09:47:31.564 [10100:29012:1202/094731.563:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 5 rejected by interface blink.mojom.WidgetHost
+12월 02, 2025 09:49:21.564 [10100:29012:1202/094921.563:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 5 rejected by interface blink.mojom.WidgetHost
+12월 02, 2025 09:49:40.279 [10100:17624:1202/094940.279:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 02, 2025 10:21:53.400 [10100:17624:1202/102153.399:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 02, 2025 10:22:19.503 [10100:17624:1202/102219.503:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 02, 2025 12:37:47.941 [10100:29012:1202/123747.940:ERROR:CONSOLE:1] "Cannot find context with specified id", source: devtools://devtools/bundled/core/sdk/sdk.js (1)
+12월 02, 2025 12:37:47.943 [10100:29012:1202/123747.940:ERROR:CONSOLE:5] "Extension server error: Inspector protocol error: Cannot find context with specified id", source: devtools://devtools/bundled/models/extensions/extensions.js (5)
+12월 02, 2025 12:53:05.775 [10100:17624:1202/125305.775:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 02, 2025 12:53:05.777 [10100:17624:1202/125305.775:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 02, 2025 13:58:35.159 [10100:17624:1202/135835.115:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 02, 2025 13:58:35.297 [10100:17624:1202/135835.289:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 02, 2025 14:57:13.935 [10100:29012:1202/145713.929:ERROR:components\device_event_log\device_event_log_impl.cc:198] [14:57:13.934] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: �슂�냼媛� �뾾�뒿�땲�떎. (0x490)
+12월 02, 2025 14:57:13.939 [10100:29012:1202/145713.936:ERROR:components\device_event_log\device_event_log_impl.cc:198] [14:57:13.938] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: �궗�슜 媛��뒫�븳 �뜲�씠�꽣媛� �뾾�뒿�땲�떎. (0x103)
+12월 02, 2025 15:00:28.681 [10100:29012:1202/150028.681:ERROR:components\device_event_log\device_event_log_impl.cc:198] [15:00:28.681] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: �슂�냼媛� �뾾�뒿�땲�떎. (0x490)
+12월 02, 2025 15:00:28.684 [10100:29012:1202/150028.684:ERROR:components\device_event_log\device_event_log_impl.cc:198] [15:00:28.686] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: �궗�슜 媛��뒫�븳 �뜲�씠�꽣媛� �뾾�뒿�땲�떎. (0x103)
+12월 02, 2025 15:00:28.684 [10100:29012:1202/150028.684:ERROR:components\device_event_log\device_event_log_impl.cc:198] [15:00:28.687] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: �궗�슜 媛��뒫�븳 �뜲�씠�꽣媛� �뾾�뒿�땲�떎. (0x103)
+12월 02, 2025 15:05:17.624 [10100:29012:1202/150517.624:ERROR:components\device_event_log\device_event_log_impl.cc:198] [15:05:17.626] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: �슂�냼媛� �뾾�뒿�땲�떎. (0x490)
+12월 02, 2025 15:05:17.631 [10100:29012:1202/150517.631:ERROR:components\device_event_log\device_event_log_impl.cc:198] [15:05:17.631] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: �궗�슜 媛��뒫�븳 �뜲�씠�꽣媛� �뾾�뒿�땲�떎. (0x103)
+12월 02, 2025 15:40:19.150 [10100:29012:1202/154019.150:ERROR:components\device_event_log\device_event_log_impl.cc:198] [15:40:19.163] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: �슂�냼媛� �뾾�뒿�땲�떎. (0x490)
+12월 02, 2025 15:40:19.166 [10100:29012:1202/154019.166:ERROR:components\device_event_log\device_event_log_impl.cc:198] [15:40:19.169] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: �궗�슜 媛��뒫�븳 �뜲�씠�꽣媛� �뾾�뒿�땲�떎. (0x103)
+12월 02, 2025 15:47:38.517 [10100:17624:1202/154738.517:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 02, 2025 15:48:03.21 [10100:17624:1202/154803.020:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 02, 2025 17:58:39.793 [10100:29012:1202/175839.792:ERROR:CONSOLE:5] "Extension server error: Object not found: ", source: devtools://devtools/bundled/models/extensions/extensions.js (5)
+12월 02, 2025 17:58:41.450 [10100:29012:1202/175841.449:ERROR:CONSOLE:5] "Extension server error: Object not found: ", source: devtools://devtools/bundled/models/extensions/extensions.js (5)
+12월 02, 2025 17:58:42.215 [10100:29012:1202/175842.214:ERROR:CONSOLE:5] "Extension server error: Object not found: ", source: devtools://devtools/bundled/models/extensions/extensions.js (5)
+12월 02, 2025 17:59:08.704 [10100:29012:1202/175908.703:ERROR:CONSOLE:5] "Extension server error: Object not found: ", source: devtools://devtools/bundled/models/extensions/extensions.js (5)
+12월 02, 2025 17:59:09.252 [10100:29012:1202/175909.251:ERROR:CONSOLE:5] "Extension server error: Object not found: ", source: devtools://devtools/bundled/models/extensions/extensions.js (5)
+12월 02, 2025 18:07:32.04 [10100:17624:1202/180732.004:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 02, 2025 18:07:32.10 [10100:17624:1202/180732.008:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+
+12월 02, 2025 21:41:28.802 NEW SESSION
+12월 02, 2025 21:41:28.802 Created TensorFlow Lite XNNPACK delegate for CPU.
+12월 02, 2025 21:41:28.881 [14112:26976:1202/214128.881:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 02, 2025 21:41:29.175 [14112:26976:1202/214129.174:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 02, 2025 21:41:59.909 [14112:26976:1202/214159.908:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 02, 2025 21:42:50.70 [14112:26976:1202/214250.070:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 02, 2025 21:44:19.746 [14112:26976:1202/214419.746:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 02, 2025 21:47:12.467 [14112:26976:1202/214712.467:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 02, 2025 21:52:51.162 [14112:26608:1202/215251.161:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 1 rejected by interface blink.mojom.WidgetHost
+12월 02, 2025 21:54:42.644 [14112:26976:1202/215442.644:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED

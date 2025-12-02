@@ -1,0 +1,8 @@
+package com.kh.spring.member.model.service;
+
+import org.springframework.stereotype.Service;
+
+@Service // 서비스 어노테이션 부여
+public class MemberServiceImpl implements MemberService {
+
+}
