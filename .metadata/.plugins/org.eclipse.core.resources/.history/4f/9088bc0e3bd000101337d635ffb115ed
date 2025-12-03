@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="boardMapper">
+
+  <select id="boardListCount" resultType="_int">
+      SELECT COUNT(*)
+      FROM BOARD
+  </select>
+
+  <select id="boardListView" parameterType="_int" resultMap="boardResultMap">
+     SELECT BOARD_NO
+            ,BOARD_TITLE
+            ,BOARD_WRITER
+            ,BOARD_CONTENT
+            ,ORIGIN_NAME
+            ,CHANGE_NAME
+            ,COUNT
+            ,CREATE_DATE
+            ,STATUS
+      FROM BOARD
+      WHERE STATUS = 'Y'
+      ORDER BY CREATE_DATE DESC      
+      
+  
+  </select>
+  
+  <select id="boardDetail" parameterType="_int" resultMap="boardResultMap">
+      SELECT BOARD_NO
+             ,BOARD_TITLE
+             ,BOARD_WRITER
+             ,CREATE_DATE
+             ,ORIGIN_NAME
+             ,BOARD_CONTENT
+      FROM BOARD
+      WHERE STATUS = 'Y'
+      AND BOARD_NO = #{bno}       
+  
+  </select>
+  
+  <update id="increaseCount" parameterType="_int">
+      UPDATE BOARD
+      SET COUNT = COUNT + 1
+      WHERE STATUS = 'Y'
+      AND BOARD_NO = #{bno}
+  </update>
+  
+  <!-- 제목, 작성자, 첨부파일, 내용 -->
+  <insert id="boardInsert" parameterType="_int">
+      UPDATE BOARD
+      SET 
+  
+  </insert>
+   
+  <resultMap type="Board" id="boardResultMap">
+     <result column="BOARD_NO" property="boardNo"></result>
+     <result column="BOARD_TITLE" property="boardTitle"></result>
+     <result column="BOARD_WRITER" property="boardWriter"></result>
+     <result column="BOARD_CONTENT" property="boardContent"></result>
+     <result column="ORIGIN_NAME" property="originName"></result>
+     <result column="CHANGE_NAME" property="changeName"></result>
+     <result column="COUNT" property="count"></result>
+     <result column="CREATE_DATE" property="createDate"></result>
+     <result column="STATUS" property="status"></result>
+  </resultMap>
+
+</mapper>

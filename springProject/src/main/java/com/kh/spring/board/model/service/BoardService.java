@@ -1,0 +1,22 @@
+package com.kh.spring.board.model.service;
+
+import java.util.ArrayList;
+
+import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.common.model.vo.PageInfo;
+
+public interface BoardService {
+	
+	ArrayList<Board> boardListView(PageInfo pi);
+
+	int listCount(); 
+	
+	Board boardDetail(int bno);
+
+	int increaseCount(int bno);
+
+	int boardInsert(Board board); 
+	
+	
+
+}

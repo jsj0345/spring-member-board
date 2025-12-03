@@ -1,0 +1,20 @@
+package com.kh.spring.board.model.service;
+
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Service;
+
+import com.kh.spring.board.model.vo.Board;
+
+@Service
+public class BoardServiceImpl implements BoardService {
+	
+	public ArrayList<Board> boardListView(SqlSession session) {
+		
+		return null; 
+	}
+	
+	
+
+}

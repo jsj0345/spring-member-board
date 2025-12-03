@@ -53,9 +53,19 @@ public class MemberServiceImpl implements MemberService {
 		return result; 
 	}
 	
+	/*
+	 * @Override
+	 * public int deleteMember(String userId) {
+	 *   return dao.deleteMember(sqlSession,userId);
+	 * }
+	 * 
+	 */
+	
 	@Override
-	public int updateMember(Member m) {
-		return 0; 
+	public int updateMember(Member m) { //m1은 태그에서 입력해온 멤버, m2는 기존 로그인 정보를 담은 멤버. 
+		int result = dao.updateMember(sqlSession,m);
+		
+		return result; 
 	}
 
 }

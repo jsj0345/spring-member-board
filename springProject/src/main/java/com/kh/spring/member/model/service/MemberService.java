@@ -13,10 +13,11 @@ public interface MemberService {
 	
 	//회원 정보 수정 (UPDATE)
 	int updateMember(Member m);
-
-	
+		
 	//회원 탈퇴 기능 (UPDATE / DELETE)
 	int deleteMember(Member m);
+	
+	//int deleteMember(String userId)
 	
 	
 	//아이디 중복 확인 기능 (SELECT)

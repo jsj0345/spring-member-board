@@ -23,4 +23,16 @@ public class MemberDao {
 		return sqlSession.delete("memberMapper.deleteMember",m); 
 	}
 
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+	    return sqlSession.update("memberMapper.updateMember",m);
+	}
+	
+	/*
+	 * public int deleteMember(SqlSessionTemplate sqlSession, String userId) {
+	 *    return sqlSession.update("memberMapper.deleteMember",userId);
+	 *    //상태값으로 두면 탈퇴를 하더라도 탈퇴 복구가 가능함. 
+	 * }   
+	 *  
+	 */
+
 }

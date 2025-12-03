@@ -1,0 +1,50 @@
+package com.kh.spring.board.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.spring.board.model.service.BoardService;
+import com.kh.spring.board.model.vo.Board;
+
+@Controller
+public class BoardDetailController {
+	
+	@Autowired
+	private BoardService service;
+	
+	@RequestMapping("/detail.bo")
+	public String boardDetail(int bno,HttpSession session, HttpServletRequest request,Model model) {
+		
+		//조회수 증가처리
+		
+		int result = service.increaseCount(bno);
+		
+		if(result>0) { //조회수 증가 성공
+			//게시글 조회
+			Board board = service.boardDetail(bno);
+			
+			model.addAttribute("board",board); // 게시글 정보 담아주기 (위임)
+			
+			return "board/boardDetailView";
+			
+			
+		} else { //조회수 증가 실패 
+			session.setAttribute("alertMsg", "게시글 조회 실패");
+			
+			return "redirect:"+request.getHeader("referer"); //이전 경로로 
+			
+		}
+	
+		
+		
+		
+		
+		
+	}
+
+}

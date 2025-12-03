@@ -1,0 +1,25 @@
+package com.kh.spring.board.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.spring.board.model.service.BoardService;
+
+@Controller
+public class BoardInsertController {
+	
+	@Autowired
+	private BoardService service;
+	
+	@RequestMapping("/insert.bo") 
+	public String boardInsert() {
+		
+		//글이 작성 됐을 경우와 안 됐을 경우를 따져야한다. 
+		
+		
+		
+		return "redirect:/list.bo?currentPage=1"; //글을 작성하고나서 최신 글이니까 첫 페이지로 돌아가야한다.  
+	}
+
+}

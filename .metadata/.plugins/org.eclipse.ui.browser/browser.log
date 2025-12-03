@@ -54,3 +54,28 @@
 12월 02, 2025 21:47:12.467 [14112:26976:1202/214712.467:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
 12월 02, 2025 21:52:51.162 [14112:26608:1202/215251.161:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 1 rejected by interface blink.mojom.WidgetHost
 12월 02, 2025 21:54:42.644 [14112:26976:1202/215442.644:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+
+12월 03, 2025 09:22:56.560 NEW SESSION
+12월 03, 2025 09:22:56.561 [20500:29660:1203/092256.557:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 03, 2025 09:22:57.178 Created TensorFlow Lite XNNPACK delegate for CPU.
+12월 03, 2025 09:23:17.978 [20500:29660:1203/092317.978:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 03, 2025 09:24:07.524 [20500:29660:1203/092407.524:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 03, 2025 09:25:59.877 [20500:29660:1203/092559.876:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 03, 2025 09:41:29.456 [20500:29660:1203/094129.455:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 03, 2025 09:46:56.370 Created TensorFlow Lite XNNPACK delegate for CPU.
+12월 03, 2025 09:46:56.503 [13656:14700:1203/094656.502:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 03, 2025 09:53:43.971 [13656:19588:1203/095343.970:ERROR:components\device_event_log\device_event_log_impl.cc:198] [09:53:43.971] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: �슂�냼媛� �뾾�뒿�땲�떎. (0x490)
+12월 03, 2025 09:53:43.976 [13656:19588:1203/095343.976:ERROR:components\device_event_log\device_event_log_impl.cc:198] [09:53:43.976] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: �궗�슜 媛��뒫�븳 �뜲�씠�꽣媛� �뾾�뒿�땲�떎. (0x103)
+12월 03, 2025 10:23:26.342 [13656:14700:1203/102326.342:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+12월 03, 2025 10:23:49.459 [13656:14700:1203/102349.458:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 03, 2025 10:52:36.328 [13656:19588:1203/105236.327:ERROR:components\device_event_log\device_event_log_impl.cc:198] [10:52:36.327] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: �슂�냼媛� �뾾�뒿�땲�떎. (0x490)
+12월 03, 2025 10:52:36.337 [13656:19588:1203/105236.336:ERROR:components\device_event_log\device_event_log_impl.cc:198] [10:52:36.336] USB: usb_service_win.cc:308 SetupDiEnumDeviceInterfaces: �궗�슜 媛��뒫�븳 �뜲�씠�꽣媛� �뾾�뒿�땲�떎. (0x103)
+12월 03, 2025 11:37:44.644 [13656:14700:1203/113744.643:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED
+12월 03, 2025 12:03:37.993 [13656:19588:1203/120337.992:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 1 rejected by interface blink.mojom.WidgetHost
+12월 03, 2025 12:51:09.796 [13656:14700:1203/125109.792:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 03, 2025 12:51:09.798 [13656:14700:1203/125109.793:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 03, 2025 13:57:24.165 [13656:14700:1203/135724.165:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 03, 2025 13:57:25.299 [13656:14700:1203/135725.299:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 03, 2025 17:54:04.567 [13656:14700:1203/175404.559:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 03, 2025 17:54:04.569 [13656:14700:1203/175404.559:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+12월 03, 2025 19:15:52.776 [13656:14700:1203/191552.775:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2

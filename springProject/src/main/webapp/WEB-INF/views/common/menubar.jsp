@@ -115,7 +115,19 @@
             <ul>
                 <li><a href="${contextRoot}">HOME</a></li>
                 <li><a href="">공지사항</a></li>
-                <li><a href="">자유게시판</a></li>
+                
+                <!-- 
+                     list.bo 요청시 boardListView가 띄워지도록 해보기
+                     나머지 Board 관련 클래스를 만들기 service,impl,dao,board VO까지
+                     boardListView() 메소드
+                     게시글 목록 불러오기 boardListView.jsp 에 해당 목록 출력하기
+                     페이징처리도 해야하니까 mybatisProject를 참고하여 페이징에 필요한 VO와 메소드를 활용하여
+                     페이징처리까지 해보기 , rowBounds 사용하기
+                     mapper : board-mapper(namespace = boardMapper)
+                     alias : Board
+                     페이징에 필요한 VO 및 클래스 등은 common 패키지쪽에 넣어서 사용하기  
+                -->
+                <li><a href="${contextRoot}/list.bo?currentPage=1">자유게시판</a></li>
                 <li><a href="">사진게시판</a></li>
             </ul>
         </div>

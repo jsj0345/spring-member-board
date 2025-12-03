@@ -1,0 +1,19 @@
+package com.kh.spring.board.model.dao;
+
+import java.util.ArrayList;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.kh.spring.board.model.vo.Board;
+
+@Repository
+public class BoardDao {
+	
+	public ArrayList<Board> boardListView(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		return boardMapper.selectList("boardMapper.boardListView",pi);
+		
+	}
+
+}

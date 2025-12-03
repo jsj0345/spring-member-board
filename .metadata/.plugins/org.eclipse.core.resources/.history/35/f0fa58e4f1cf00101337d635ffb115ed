@@ -1,0 +1,31 @@
+package com.kh.spring.board.model.service;
+
+import java.util.ArrayList;
+
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kh.spring.board.model.dao.BoardDao;
+import com.kh.spring.board.model.vo.Board;
+
+@Service
+public class BoardServiceImpl implements BoardService {
+	
+	@Autowired
+	private BoardDao dao;
+	
+	@Autowired
+	private SqlSessionTemplate session;
+	
+	
+	@Override
+	public ArrayList<Board> boardListView(SqlSessionTemplate session, PageInfo pi) {
+		
+		return null; 
+	}
+	
+	
+
+}

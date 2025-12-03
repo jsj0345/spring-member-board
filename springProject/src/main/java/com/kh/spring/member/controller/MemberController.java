@@ -2,6 +2,7 @@ package com.kh.spring.member.controller;
 
 import java.io.UnsupportedEncodingException;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -351,6 +352,70 @@ public class MemberController {
 			return "member/mypage"; // 실패하면 마이페이지로 돌아가기 (뷰 리졸버를 통한 경로 반환) 
 		}
 		
+		/*
+		 * //System.out.println(member); // 폼 태그에서 입력한 멤버 조회
+		 * 
+		 * //System.out.println(loginMember);
+		 * 
+		 * 기존에 만들어둔 메소드 활용(로그인 데이터 조회해오기)
+		 * 
+		 * if(loginMember!=null && bcrypt.matches(member.getUserPwd(), loginMember.getUserPwd()) {
+		 *      
+		 *      //회원 탈퇴 처리 요청하기
+		 *      int result = service.deleteMember(m.getUserId());
+		 *      
+		 *      if(result > 0) { //탈퇴 성공 
+		 *        //탈퇴 되었으니 로그인을 해제시키고 메인페이지로 보내기
+		 *        session.removeAttribute("loginMember"); //로그인 해제
+		 *        session.setAttribute("alertMsg","그동안 서비스를 이용해주셔서 감사합니다.");
+		 *        return "redirect:/"; 
+		 *      
+		 *      } else { //탈퇴 실패 
+		 *         session.setAttribute("alertMsg","요청이 실패하였습니다. 관리자에게 문의하세요.");
+		 *         return "redirect:mypage.me";
+		 *      
+		 *      }
+		 *        
+		 *     
+		 * } else { //로그인 정보가 없거나 비밀번호가 일치하지 않는 경우
+		 *     session.setAttribute("alertMsg","비밀번호가 일치하지 않습니다.");
+		 *     
+		 *     return "redirect:mypage.me";
+		 * }
+		 * 
+		 */
+		
+	}
+	
+	//회원 정보 수정 메소드
+	@RequestMapping("/update.me")
+	public String updateMember(Member member, HttpSession session) {
+		
+		//커맨드 객체 방식을 이용해보기 (폼 태그에서 입력 받은 정보들은 그 정보들을 갖고 새로운 멤버 객체를 만드는것)
+		
+		//updateMember 메서드의 member 변수는 폼태그에서 갖고 온 것을 알아두기. 
+		
+		//Member loginMember = (Member) session.getAttribute("loginMember"); // 로그인 회원 정보를 세션에서 갖고오기
+		
+		int result = service.updateMember(member);
+		
+		
+		
+		//정보를 갖고와야 마이페이지로 이동했을때 바뀐 정보가 페이지에서 보인다. 
+		
+		if(result > 0) {
+			Member loginMember = service.loginMember(member); // 바뀐 정보 갖고오기
+			session.setAttribute("alertMsg", "회원 정보 수정 성공!");
+			session.setAttribute("loginMember",loginMember); // 여기서 setAttribute를 해야 마이페이지에서 바뀐 정보가 보인다. 
+			 
+		} else {
+			session.setAttribute("alertMsg", "회원 정보 수정 실패!");
+			
+		}
+		
+		return "redirect:mypage.me"; // 마이페이지로 이동
+		
+	
 	}
 	
 

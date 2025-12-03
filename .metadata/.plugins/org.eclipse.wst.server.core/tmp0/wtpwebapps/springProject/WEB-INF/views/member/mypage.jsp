@@ -26,6 +26,7 @@
 </head>
 <body>
     
+    
     <!-- 각 인풋요소에 로그인된 정보 띄워주기  -->
     <%@ include file="/WEB-INF/views/common/menubar.jsp"%>
 
@@ -34,11 +35,18 @@
         <div class="innerOuter">
             <h2>마이페이지</a></h2>
             <br>
+            
+            <!--
+               수정하기 : updateMember() / update.me
+               성공시 로그인정보 갱신 , 정보수정 성공 메시지
+               실패시 정보수정 실패 메시지 alert / 마이페이지로 이동   
+            
+             -->
 
-            <form action="" method="post">
+            <form action="${contextRoot}/update.me" method="post">
                 <div class="form-group">
                     <label for="userId">* ID : </label>
-                    <input type="text" class="form-control" id="userId" value="${loginMember.userId}" name="userId" readonly> <br>
+                    <input type="text" class="form-control" id="mypageId" value="${loginMember.userId}" name="userId" readonly> <br>
 
                     <label for="userName">* Name : </label>
                     <input type="text" class="form-control" id="userName" value="${loginMember.userName}" name="userName" required> <br>
@@ -98,14 +106,17 @@
                             정말로 탈퇴 하시겠습니까? <br>
                         </div>
                         <br>
+                            <input type="hidden" name="userId" value="${loginMember.userId}">
                             <label for="userPwd" class="mr-sm-2">Password : </label>
-                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name="userPwd"> 
+                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="inputPwd" name="userPwd"> 
                             <!-- 탈퇴할때 비밀번호 마스킹 처리 해줘야함 type이 text로 되어있어서 수정해야한다.  -->
+                            <!-- 그리고 비밀번호를 전달 받으면 복호화 된 비밀번호랑 비교를 해야한다. 여기선 비교 못한다. -->
                          <br>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                        <!-- 탈퇴하기 버튼을 누름으로써 데이터 제출 -->
                         <!--  onclick="return checkPass();" -->
                     </div>
                 </form>
