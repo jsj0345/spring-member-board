@@ -13,6 +13,7 @@ import com.kh.spring.board.model.vo.Board;
 
 @Controller
 public class BoardDetailController {
+/*	
 	
 	@Autowired
 	private BoardService service;
@@ -40,11 +41,7 @@ public class BoardDetailController {
 			
 		}
 	
-		
-		
-		
-		
-		
+			
 	}
-
+*/
 }

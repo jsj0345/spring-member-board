@@ -7,20 +7,14 @@ public interface MemberService {
 	
 	//로그인 기능 (SELECT)
 	Member loginMember(Member m);
-	
 	//회원가입 기능 (INSERT)
 	int insertMember(Member m);
-	
 	//회원 정보 수정 (UPDATE)
 	int updateMember(Member m);
-		
 	//회원 탈퇴 기능 (UPDATE / DELETE)
-	int deleteMember(Member m);
-	
-	//int deleteMember(String userId)
-	
+	int deleteMember(String userId);
 	
 	//아이디 중복 확인 기능 (SELECT)
 	
-
+	
 }

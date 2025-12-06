@@ -1,0 +1,86 @@
+/*
+  1번,2번
+*/
+
+--1번
+
+DROP TABLE PRO_TEST;
+
+CREATE TABLE PRO_TEST
+AS (SELECT * FROM EMPLOYEE);
+
+SELECT * FROM PRO_TEST;
+
+CREATE OR REPLACE PROCEDURE SALARY_UPDATE(SALARY_PERCENT IN NUMBER
+
+)
+
+IS
+
+BEGIN 
+   UPDATE PRO_TEST
+   SET SALARY = SALARY + (SALARY * (SALARY_PERCENT / 100))
+   COMMIT;
+END;
+/
+
+EXEC SALARY_UPDATE(20);
+
+--2번
+
+CREATE OR REPLACE PROCEDURE PHONE_INFORMATION( EID IN PRO_TEST.EMP_ID%TYPE
+                                              ,ENAME OUT PRO_TEST.EMP_NAME%TYPE
+                                              ,PHONEE OUT PRO_TEST.PHONE%TYPE
+                                              ,EMAILL OUT PRO_TEST.EMAIL%TYPE
+
+)
+
+IS
+
+BEGIN 
+
+     
+     /*
+     SELECT EMP_NAME, PHONE
+     INTO ENAME, PHONEE
+     FROM PRO_TEST
+     WHERE EMP_ID = EID; 
+     */ 
+     
+     FOR E IN (SELECT * FROM PRO_TEST) LOOP
+        IF((EID = E.EMP_ID) AND (E.PHONE IS NOT NULL)) THEN
+          SELECT EMP_NAME,PHONE,EMAIL
+                 INTO ENAME,PHONEE,EMAILL
+                 FROM PRO_TEST
+                 WHERE EMP_ID = EID;
+           EXIT;
+        ELSIF((EID = E.EMP_ID) AND (E.PHONE IS NULL)) THEN
+          SELECT EMP_NAME, NVL(PHONE, '번호없음'),EMAIL
+                 INTO ENAME,PHONEE,EMAILL
+                 FROM PRO_TEST
+                 WHERE EMP_ID = EID;
+          EXIT;
+       END IF; 
+     END LOOP; 
+     
+END;
+/
+
+DECLARE
+   ENAME PRO_TEST.EMP_NAME%TYPE;
+   PHONEE PRO_TEST.PHONE%TYPE;
+   EMAILL PRO_TEST.EMAIL%TYPE;
+BEGIN
+  PHONE_INFORMATION('&사번',ENAME,PHONEE,EMAILL);
+  
+  IF(PHONEE = '번호없음') THEN
+      DBMS_OUTPUT.PUT_LINE('사원 이름 : ' || ENAME);
+      DBMS_OUTPUT.PUT_LINE('핸드폰 번호 : ' || PHONEE);
+      DBMS_OUTPUT.PUT_LINE('이메일 : ' || EMAILL);
+  ELSE 
+      DBMS_OUTPUT.PUT_LINE('사원 이름 : ' || ENAME);
+      DBMS_OUTPUT.PUT_LINE('핸드폰 번호 : ' || PHONEE);
+  END IF;
+  
+END;
+/

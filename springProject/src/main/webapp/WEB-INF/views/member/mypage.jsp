@@ -5,9 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <style>
         .content {
@@ -26,42 +23,40 @@
 </head>
 <body>
     
-    
-    <!-- 각 인풋요소에 로그인된 정보 띄워주기  -->
-    <%@ include file="/WEB-INF/views/common/menubar.jsp"%>
+    <!-- 각 인풋요소에 로그인된 정보 띄워주기 -->
+    <%@ include file="/WEB-INF/views/common/menubar.jsp" %>
 
     <div class="content">
         <br><br>
         <div class="innerOuter">
-            <h2>마이페이지</a></h2>
+            <h2>마이페이지</h2>
             <br>
-            
-            <!--
-               수정하기 : updateMember() / update.me
-               성공시 로그인정보 갱신 , 정보수정 성공 메시지
-               실패시 정보수정 실패 메시지 alert / 마이페이지로 이동   
-            
-             -->
-
-            <form action="${contextRoot}/update.me" method="post">
+			<!-- 
+				수정하기 : updateMember()  / update.me
+				성공시 로그인정보 갱신,정보수정 성공 메시지 / 마이페이지로 이동
+				실패시 정보수정 실패 메시지 alert / 마이페이지로 이동  
+				 		
+			
+			 -->
+            <form action="${contextRoot }/update.me" method="post">
                 <div class="form-group">
                     <label for="userId">* ID : </label>
-                    <input type="text" class="form-control" id="mypageId" value="${loginMember.userId}" name="userId" readonly> <br>
+                    <input type="text" class="form-control" id="mypageId" value="${loginMember.userId }" name="userId" readonly> <br>
 
                     <label for="userName">* Name : </label>
-                    <input type="text" class="form-control" id="userName" value="${loginMember.userName}" name="userName" required> <br>
+                    <input type="text" class="form-control" id="userName" value="${loginMember.userName }" name="userName" required> <br>
 
                     <label for="email"> &nbsp; Email : </label>
-                    <input type="text" class="form-control" id="email" value="${loginMember.email}" name="email"> <br>
+                    <input type="text" class="form-control" id="email" value="${loginMember.email }" name="email"> <br>
 
                     <label for="age"> &nbsp; Age : </label>
-                    <input type="number" class="form-control" id="age" value="${loginMember.age}" name="age"> <br>
+                    <input type="number" class="form-control" id="age" value="${loginMember.age }" name="age"> <br>
 
                     <label for="phone"> &nbsp; Phone : </label>
-                    <input type="tel" class="form-control" id="phone" value="${loginMember.phone}" name="phone"> <br>
+                    <input type="tel" class="form-control" id="phone" value="${loginMember.phone }" name="phone"> <br>
                     
                     <label for="address"> &nbsp; Address : </label>
-                    <input type="text" class="form-control" id="address" value="${loginMember.address}" name="address"> <br>
+                    <input type="text" class="form-control" id="address" value="${loginMember.address }" name="address"> <br>
                     
                     <label for=""> &nbsp; Gender : </label> &nbsp;&nbsp;
                     <input type="radio" id="Male" value="M" name="gender">
@@ -77,8 +72,20 @@
             </form>
         </div>
         <br><br>
-        
     </div>
+    
+    <script>
+    	$(function(){
+    		$("input[value=${loginMember.gender}]").prop("checked",true);
+    		
+//     		$("input[name=gender]").each(function(){
+    			
+//     		});
+    		
+    	});
+    
+    </script>
+    
 
     <!-- 회원탈퇴 버튼 클릭 시 보여질 Modal -->
     <div class="modal fade" id="deleteForm">
@@ -90,34 +97,29 @@
                     <h4 class="modal-title">회원탈퇴</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                
-                <!-- 회원 탈퇴 기능 
-                     메소드명 deleteMember / 매핑주소 delete.me
-                     실패시 실패메시지와 함께 마이페이지로 
-                     성공시 로그인 풀고 메인페이지로 메시지도 함께 (메시지 자유)
-                
-                -->
-
-                <form action="${contextRoot}/delete.me" method="post">
+				
+				<!-- 회원 탈퇴 기능 
+					 메소드명 deleteMember / 매핑주소 delete.me
+					 실패시 실패메시지와 함께 마이페이지로
+					 성공시 로그인 풀고 메인페이지로 메시지도 함께 (메시지 자유)
+				 -->
+				
+                <form action="${contextRoot }/delete.me" method="post">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div align="center">
                             탈퇴 후 복구가 불가능합니다. <br>
                             정말로 탈퇴 하시겠습니까? <br>
                         </div>
-                        <br>
-                            <input type="hidden" name="userId" value="${loginMember.userId}">
+                        <br>	
+                        	<!-- 식별용 데이터 전달 방법 1) hidden으로 전달 -->
+                        	<input type="hidden" name="userId" value="${loginMember.userId}">
                             <label for="userPwd" class="mr-sm-2">Password : </label>
-                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="inputPwd" name="userPwd"> 
-                            <!-- 탈퇴할때 비밀번호 마스킹 처리 해줘야함 type이 text로 되어있어서 수정해야한다.  -->
-                            <!-- 그리고 비밀번호를 전달 받으면 복호화 된 비밀번호랑 비교를 해야한다. 여기선 비교 못한다. -->
-                         <br>
+                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="inputPwd" name="userPwd"> <br>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
                         <button type="submit" class="btn btn-danger">탈퇴하기</button>
-                        <!-- 탈퇴하기 버튼을 누름으로써 데이터 제출 -->
-                        <!--  onclick="return checkPass();" -->
                     </div>
                 </form>
             </div>
@@ -125,47 +127,6 @@
     </div>
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-    
-    <script>
-      $(function(){
-    	  
-    	  $("input[value=${loginMember.gender}]").prop("checked",true); 
-    	  
-    	  /*
-    	  $("input[name=gender]").each(function(){
-    		  
-    	  })
-    	  */
-    	  
-      });
-      
-      
-      /*
-      function checkPass() {
-    	  
-    	  let a = document.querySelector("#loginModal .modal-content>form #userPwd"); //이거는 복호화 된 비번이 아니다.
-    	  //복호화 되기 전에 입력 비밀번호.
-          
-          let b = document.querySelector("#deleteForm .modal-content>form #userPwd");
-    	  
-    	  console.log(a.value);
-    	  console.log(b.value);
-                    
-          if(a.value==b.value) {
-        	  return true;
-          } else {
-        	  alert("회원님의 비밀번호와 입력하신 비밀번호가 일치하지 않습니다."); 
-        	  
-        	  return false; 
-          }
-    	  
-    	  
-      }
-     */ 
-      
-      
-    
-    </script>
 
 </body>
 </html>

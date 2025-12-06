@@ -4,69 +4,206 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="boardMapper">
-
-  <select id="boardListCount" resultType="_int">
-      SELECT COUNT(*)
-      FROM BOARD
-  </select>
-
-  <select id="boardListView" parameterType="_int" resultMap="boardResultMap">
-     SELECT BOARD_NO
-            ,BOARD_TITLE
-            ,BOARD_WRITER
-            ,BOARD_CONTENT
-            ,ORIGIN_NAME
-            ,CHANGE_NAME
-            ,COUNT
-            ,CREATE_DATE
-            ,STATUS
-      FROM BOARD
-      WHERE STATUS = 'Y'
-      ORDER BY CREATE_DATE DESC      
-      
-  
-  </select>
-  
-  <select id="boardDetail" parameterType="_int" resultMap="boardResultMap">
-      SELECT BOARD_NO
-             ,BOARD_TITLE
-             ,BOARD_WRITER
-             ,CREATE_DATE
-             ,ORIGIN_NAME
-             ,BOARD_CONTENT
-      FROM BOARD
-      WHERE STATUS = 'Y'
-      AND BOARD_NO = #{bno}       
-  
-  </select>
-  
-  <update id="increaseCount" parameterType="_int">
-      UPDATE BOARD
-      SET COUNT = COUNT + 1
-      WHERE STATUS = 'Y'
-      AND BOARD_NO = #{bno}
-  </update>
-  
-  <!-- 제목, 작성자, 첨부파일, 내용 (이거 글번호도 필요함)-->
-  <insert id="boardInsert" parameterType="Board">
-      INSERT INTO BOARD (BOARD_NO
-      					,BOARD_TITLE
-      					,BOARD_WRITER
-                    	,ORIGIN_NAME
-                    	,BOARD_CONTENT)
-      VALUES(SEQ_BNO.NEXTVAL,#{boardTitle},#{boardWriter},#{originName},#{boardContent})              
-  </insert>
+  	
+  	<select id="listCount" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM BOARD
+  		WHERE STATUS = 'Y'
+  	</select>
+  	
+  	<!-- 
+  	  <select id="listCount" resultType="_int">
+  	    SELECT COUNT(*)
+  	    FROM BOARD
+  	    WHERE STATUS = 'Y'
+  	  </select>   
+  	-->
+  	
+  	
+  	<select id="boardList" resultType="Board">
+  		SELECT BOARD_NO
+  			  ,BOARD_TITLE
+  			  ,BOARD_WRITER
+  			  ,COUNT
+  			  ,CREATE_DATE
+  			  ,ORIGIN_NAME
+  			  ,CHANGE_NAME
+  		FROM BOARD
+  		WHERE STATUS = 'Y'
+  		ORDER BY CREATE_DATE DESC
+  	</select>
+  	
+  	<!-- 
+  	<select id="boardList" resultType="Board">
+  	    SELECT BOARD_NO
+  	           ,BOARD_TITLE
+  	           ,BOARD_WRITER
+  	           ,COUNT
+  	           ,CREATE_DATE
+  	           ,ORIGIN_NAME
+  	           ,CHANGE_NAME
+  	    FROM BOARD
+  	    WHERE STATUS = 'Y'
+  	    ORDER BY CREATE_DATE DESC        
+  	</select>
+  	 -->
+  	
+  	
+  	<update id="increaseCount" parameterType="_int">
+  		UPDATE BOARD
+  		SET COUNT = COUNT+1
+  		WHERE BOARD_NO = #{bno}
+  		AND STATUS = 'Y'
+  	</update>
+  	
+  	<!-- 
+  	<update id="increaseCount" parameterType="_int">
+  	    UPDATE BOARD
+  	    SET COUNT = COUNT+1
+  	    WHERE BOARD_NO = #{bno}
+  	    AND STATUS = 'Y'
+  	 -->
+  	
+  	<select id="boardDetail" resultType="Board" parameterType="_int">
+  		SELECT BOARD_NO
+  			  ,BOARD_TITLE
+  			  ,BOARD_WRITER
+  			  ,BOARD_CONTENT
+  			  ,ORIGIN_NAME
+  			  ,CHANGE_NAME
+  			  ,CREATE_DATE
+  		FROM BOARD
+  		WHERE BOARD_NO = #{bno}
+  		AND STATUS ='Y'
+  	</select>
+  	
+  	<!-- 
+  	<select id="boardDetail" resultType="Board" parameterType="_int">
+  	    SELECT BOARD_NO
+  	           ,BOARD_TITLE
+  	           ,BOARD_WRITER
+  	           ,BOARD_CONTENT
+  	           ,ORIGIN_NAME
+  	           ,CHANGE_NAME
+  	           ,CREATE_DATE
+  	    FROM BOARD
+  	    WHERE BOARD_NO = #{bno}
+  	    AND STATUS = 'Y'        
+  	</select>
+  	 -->
+  	
+  	<insert id="boardInsert" parameterType="Board">
+  		INSERT INTO BOARD(BOARD_NO
+  						 ,BOARD_TITLE
+  						 ,BOARD_WRITER
+  						 ,BOARD_CONTENT
+  						 ,CHANGE_NAME
+  						 ,ORIGIN_NAME)
+  		VALUES(SEQ_BNO.NEXTVAL
+  			  ,#{boardTitle}
+  			  ,#{boardWriter}
+  			  ,#{boardContent}
+  			  ,#{changeName}
+  			  ,#{originName})
+  	</insert>
+  	
+  	<!-- 
+  	
+  	<insert id="boardInsert" parameterType="Board">
+  	    INSERT INTO BOARD(BOARD_NO
+  	                      ,BOARD_TITLE
+  	                      ,BOARD_WRITER
+  	                      ,BOARD_CONTENT
+  	                      ,CHANGE_NAME
+  	                      ,ORIGIN_NAME)
+  	    VALUES(SEQ_BNO.NEXTVAL
+  	            ,#{boardTitle}
+  	            ,#{boardWriter}
+  	            ,#{boardContent}
+  	            ,#{changeName}
+  	            ,#{originName})
+  	</insert>                               
+  	
+  	 -->
+  	
+  	<update id="updateBoard" parameterType="Board">
+  		UPDATE BOARD 
+  		SET BOARD_TITLE = #{boardTitle}
+  		   ,BOARD_CONTENT = #{boardContent}
+  		   ,CHANGE_NAME = #{changeName}
+  		   ,ORIGIN_NAME = #{originName}
+  		WHERE BOARD_NO = #{boardNo}
+  		AND STATUS = 'Y'
+  	</update>
+  	
+  	<!-- 
+  	<update id="updateBoard" parameterType="Board">
+  	    UPDATE BOARD
+  	    SET BOARD_TITLE = #{boardTitle}
+  	        ,BOARD_CONTENT = #{boardContent}
+  	        ,CHANGE_NAME = #{changeName}
+  	        ,ORIGIN_NAME = #{originName}
+  	    WHERE BOARD_NO = #{boardNo}
+  	    AND STATUS = 'Y'     
+  	 -->
+  	
+  	<delete id="deleteBoard" parameterType="_int">
+  		DELETE FROM BOARD
+  		WHERE BOARD_NO = #{bno}
+  	</delete>
    
-  <resultMap type="Board" id="boardResultMap">
-     <result column="BOARD_NO" property="boardNo"></result>
-     <result column="BOARD_TITLE" property="boardTitle"></result>
-     <result column="BOARD_WRITER" property="boardWriter"></result>
-     <result column="BOARD_CONTENT" property="boardContent"></result>
-     <result column="ORIGIN_NAME" property="originName"></result>
-     <result column="CHANGE_NAME" property="changeName"></result>
-     <result column="COUNT" property="count"></result>
-     <result column="CREATE_DATE" property="createDate"></result>
-     <result column="STATUS" property="status"></result>
-  </resultMap>
-
+   <!-- 
+   <update id="deleteBoard" parameterType="_int">
+   		UPDATE BOARD
+   		SET STATUS = 'N'
+   		WHERE BOARD_NO = #{bno}
+   </update>
+   -->
+  	
+  	<!-- 검색을 위한 동적 sql 처리  
+  		 test안에서 조건처리 연산자는 java문법처럼 사용 (같다 == , = 할당 ) 주의 !
+  	-->
+  	<select id="searchList" resultType="Board" parameterType="hashmap">
+  		SELECT BOARD_NO
+  			  ,BOARD_TITLE
+  			  ,BOARD_WRITER
+  			  ,COUNT
+  			  ,CREATE_DATE
+  			  ,ORIGIN_NAME
+  			  ,CHANGE_NAME
+		FROM BOARD
+		<choose>
+			<when test="condition == 'title'">
+				WHERE BOARD_TITLE LIKE '%'||#{keyword}||'%'
+			</when>
+			<when test="condition == 'writer'">
+				WHERE BOARD_WRITER = #{keyword} 
+			</when>
+			<otherwise>
+				WHERE BOARD_CONTENT LIKE '%'||#{keyword}||'%' 
+			</otherwise>			
+		</choose>
+  		AND STATUS = 'Y'
+  	</select>
+  	
+  	<!-- 검색된 게시글 개수  -->
+  	<select id="searchListCount" resultType="_int">
+  		SELECT COUNT(*)
+		FROM BOARD
+		<choose>
+			<when test="condition == 'title'">
+				WHERE BOARD_TITLE LIKE '%'||#{keyword}||'%'
+			</when>
+			<when test="condition == 'writer'">
+				WHERE BOARD_WRITER = #{keyword} 
+			</when>
+			<otherwise>
+				WHERE BOARD_CONTENT LIKE '%'||#{keyword}||'%' 
+			</otherwise>			
+		</choose>
+  		AND STATUS = 'Y'
+  	
+  	</select>
+  
+  
 </mapper>

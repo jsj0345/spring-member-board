@@ -29,7 +29,7 @@
 	   <!-- mybatis-config 파일 위치 넣어주기 classpath : (target) classes폴더 최상단 시작점-->
 	   <property name="configLocation" value="classpath:mybatis-config.xml"></property>
 	   <!-- mybatis-mapper 파일 위치 넣어주기 /  *-mapper : *는 전체를 뜻하는 와일드카드-->
-	   <property name="mapperLocations" value="classPath:mappers/*-mapper.xml"></property>
+	   <property name="mapperLocations" value="classpath:mappers/*-mapper.xml"></property>
 	
 	</bean>
 	

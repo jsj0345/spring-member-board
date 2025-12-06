@@ -1,6 +1,42 @@
 package com.kh.spring.common.model.vo;
 
+import com.kh.spring.common.template.Pagination;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class PageInfo {
+	private int currentPage;
+	private int listCount;
+	private int boardLimit;
+	private int pageLimit;
+	
+	private int maxPage;
+	private int startPage;
+	private int endPage;
+}
+/*
+public class PageInfo {
+   private int currentPage; //현재 페이지
+   private int listCount; // 총 게시글 개수
+   private int boardLimit; // 한 페이지에 보여질 게시글 개수
+   private int pageLimit; //페이지 하단에 보여질 최대 페이징 바 개수 
+   
+   private int maxPage; // 총 게시글 개수와 한 페이지에 보여질 개수를 계산하여 나오는 페이지
+   private int startPage; // 페이지 하단에 보여질 페이징바 시작 수
+   private int endPage; // 페이지 하단에 보여질 페이징바 끝 수 
+   
+package com.kh.spring.common.model.vo;
+
+import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,3 +59,4 @@ public class PageInfo {
 	
 
 }
+*/

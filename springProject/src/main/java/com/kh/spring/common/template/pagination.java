@@ -2,49 +2,84 @@ package com.kh.spring.common.template;
 
 import com.kh.spring.common.model.vo.PageInfo;
 
-public class pagination {
+
+public class Pagination {
 	
 	//페이징 처리용 PageInfo 객체에 필드를 담아주는 메소드 (계산처리까지)
 	
 	public static PageInfo getPageInfo(int listCount,int currentPage
-			                       ,int boardLimit,int pageLimit) {
+									  ,int boardLimit,int pageLimit) {
 		
-		int maxPage = (int) Math.ceil((double)listCount/boardLimit);
-		int startPage = (currentPage-1)/pageLimit * pageLimit + 1;
-		int endPage = startPage+pageLimit-1; 
+		int maxPage = (int)Math.ceil((double)listCount/boardLimit);
+		int startPage = (currentPage-1)/pageLimit*pageLimit+1;
+		int endPage = startPage+pageLimit-1;
 		
-		//최대페이지(maxPage)가 endPage수보다 작을때 endPage를 maxPage수로 변경하기
-		if(maxPage < endPage) {
-			endPage = maxPage; // maxPage에 있는 값을 endPage에 대입하기
+		//endPage가 maxPage보다 클때
+		if(maxPage<endPage) {
+			endPage = maxPage;
 		}
 		
-		/*
-		 * 	private int listCount; // 총 게시글 개수
-			private int currentPage; // 현재 페이지
-			private int pageLimit; // 페이지 하단에 보여질 페이징바 최대 개수
-			private int boardLimit; // 한 페이지에서 보여질 게시글 개수
-			
-			private int maxPage; // 총 게시글 개수와 한 페이지에서 보여질 개수를 계산하여 나오는 마지막 페이지
-			private int startPage; // 페이지 하단에 보여질 페이징바 시작 수
-			private int endPage; // 페이지 하단에 보여질 페이징바 끝 수 
-		 */
-				
-		//PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+		//PageInfo pi = new PageInfo(currentPage,listCount,boardLimit,pageLimit,maxPage,startPage,endPage);
 		
-		PageInfo pi2 = PageInfo.builder()
-				               .listCount(listCount)
-				               .currentPage(currentPage)
-				               .pageLimit(pageLimit)
-				               .boardLimit(boardLimit)
-				               .maxPage(maxPage)
-				               .startPage(startPage)
-				               .endPage(endPage)
-				               .build();
-		
+		PageInfo pi2 =	PageInfo.builder()
+								.listCount(listCount)
+							    .currentPage(currentPage)
+							    .boardLimit(boardLimit)
+							    .pageLimit(pageLimit)
+							    .maxPage(maxPage)
+							    .startPage(startPage)
+							    .endPage(endPage)
+							    .build(); 
 		//lombok의 @Builder 어노테이션을 이용하여 생성할 각 필드를 메소드처럼 사용하여 값을 채워줄 수 있다.
-		//필요한 필드만 채워넣을 수 있는 장점이 있음. 
-		
-		return pi2; 
+		//필요한 필드만 채워넣을 수 있는 장점이 있음,값을 넣는 순서 중요하지 않음
+							    
+		return pi2;
 	}
-
+	
+	
+	
 }
+
+/*
+package com.kh.spring.common.template;
+
+import com.kh.spring.common.model.vo.PageInfo;
+
+public class Pagination {
+
+  public static PageInfo getPageInfo(int listCount, int currentPage, int boardLimit, int pageLimit) {
+  
+     int maxPage = (int)Math.ceil((double)listCount/boardLimit); 
+     int startPage = (currentPage-1)/pageLimit*pageLimit+1;
+     int endPage = startPage+pageLimit-1;
+     
+     //endPage가 maxPage보다 클때
+     if(maxPage<endPage) {
+         endPage = maxPage; 
+     
+     }
+     
+     //PageInfo pi = new PageInfo(currentPage,listCount,boardLimit,pageLimit,maxPage,statrPage,endPage);
+     
+     PageInfo pi2 = PageInfo.builder()
+                            .listCount(listCount)
+                            .currentPage(currentPage)
+                            .boardLimit(boardLimit)
+                            .pageLimit(pageLimit)
+                            .maxPage(maxPage)
+                            .startPage(startPage)
+                            .endPage(endPage)
+                            .build();
+                            
+    lombok의 @Builder 어노테이션을 이용하여 생성할 각 필드를 메소드처럼 사용 할 수 있다.
+    
+    필요한 필드만 채워넣을 수 있는 장점이 있음, 값을 넣는 순서는 중요치 않음.
+    
+    return pi2;
+ 
+  }
+
+}  
+*/
+
+

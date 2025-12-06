@@ -1,6 +1,7 @@
 package com.kh.spring.board.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,48 +10,115 @@ import org.springframework.stereotype.Repository;
 import com.kh.spring.board.model.vo.Board;
 import com.kh.spring.common.model.vo.PageInfo;
 
+
 @Repository
 public class BoardDao {
+
 	
-	public ArrayList<Board> boardListView(SqlSessionTemplate sqlSession, PageInfo pi) {
+	//게시글 개수
+	public int listCount(SqlSessionTemplate sqlSession) {
 		
-		// 마이타비스에서 제공하는 rowbounds 객체를 이용해보자.
-		// RowBounds 객체에 매개변수 offset과 limit를 전달한다.
-		// offset : 몇개씩 건너뛰고 보여줄것인지에 대한 값
-		// limit : 몇개씩 보여줄것인지에 대한 값 - boardLimit과 같은 값
+		return sqlSession.selectOne("boardMapper.listCount");
+	}
+	
+	//게시글 목록
+	public ArrayList<Board> boardList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
-		//한 페이지에 5개씩 게시글을 보여주기
-		//1페이지 : 1 ~ 5 / 건너뛸값 없으니 0
-		//2페이지 : 6 ~ 10 / 6번부터 보여줘야하니 건너뛸 값 5
-		//3페이지 : 11 ~ 15 / 11번부터 보여줘야하니 건너뛸 값 10 
 		
-		int limit = pi.getBoardLimit(); // 한 페이지당 몇개씩 보여줄지에 관한 변수
-		int offset = (pi.getCurrentPage()-1)*limit; 
-		//현재 페이지가 2페이지면 건너뛸값 5. 
+		//offset/limit 추가해주기
+		int limit = pi.getBoardLimit(); //몇개씩 보여줄것인지
+		int offset = (pi.getCurrentPage()-1)*limit; //몇개를 건너뛰고 보여줄것인지
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		
-		//selectList의 두번째 매개변수는 파라미터 위치이기 때문에 rowBounds는 세번째 위치에 넣어야한다.
-		//파라미터가 없다고해도 null을 채워서 자리를 맞춰 전달해야한다. 
-		return (ArrayList) sqlSession.selectList("boardMapper.boardListView",null,rowBounds);
-		
-	}
-
-	public int boardListCount(SqlSessionTemplate sqlSession) {
-		
-		return sqlSession.selectOne("boardMapper.boardListCount"); 
-	}
-
-	public Board boardDetail(SqlSessionTemplate sqlSession, int bno) {
-		return sqlSession.selectOne("boardMapper.boardDetail", bno);
+		//selectList의 두번째 매개변수는 파라미터 위치이기 때문에 rowBounds는 세번째 위치에 넣어야한다
+		//파라미터가 없다고해도 null을 채워서 자리를 맞춰 전달해야한다.
+		return (ArrayList)sqlSession.selectList("boardMapper.boardList",null,rowBounds);
 	}
 
 	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
+		
 		return sqlSession.update("boardMapper.increaseCount",bno);
 	}
 
-	public int boardInsert(SqlSessionTemplate sqlSession, Board board) {
-		return sqlSession.insert("boardMapper.boardInsert", board); 
+	public Board boardDetail(SqlSessionTemplate sqlSession, int bno) {
+		
+		return sqlSession.selectOne("boardMapper.boardDetail",bno);
+	}
+
+	public int boardInsert(SqlSessionTemplate sqlSession, Board b) {
+		
+		return sqlSession.insert("boardMapper.boardInsert",b);
+		
+	}
+
+	public int updateBoard(SqlSessionTemplate sqlSession, Board b) {
+		
+		return sqlSession.update("boardMapper.updateBoard",b);
+	}
+
+	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
+		
+		return sqlSession.delete("boardMapper.deleteBoard",bno);
+	}
+
+	public ArrayList<Board> searchList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		
+		
+		int limit = pi.getBoardLimit(); //몇개씩 보여줄것인지
+		int offset = (pi.getCurrentPage()-1)*limit;//몇개를 건너뛸것인지
+		
+		//RowBounds 객체 생성하기 
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		
+		//매개변수 자리 잘 맞춰서 전달하기 (매퍼구문,파라미터,rowbounds)
+		return (ArrayList)sqlSession.selectList("boardMapper.searchList",map,rowBounds);
+	}
+	
+	//검색 게시글 개수 
+	public int searchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		
+		return sqlSession.selectOne("boardMapper.searchListCount",map);
 	}
 
 }
+
+/*
+@Repository
+public class BoardDao {
+
+  public int listCount(SqlSessionTemplate sqlSession) {
+     return sqlSession.selectOne("boardMapper.listCount");
+  }
+  
+  public ArrayList<Board> boardList(SqlSessionTemplate sqlSession, PageInfo pi) {
+     
+     // offset / limit 추가하기
+     int limit = pi.getBoardLimit(); //몇개씩 보여줄것인지
+     int offset = (pi.getCurrentPage()-1)*limit; // 몇개를 건너뛰고 보여줄것인지
+     
+     RowBounds rowBounds = new RowBounds(offset,limit);
+     
+     //selectList의 두번째 매개변수는 파라미터 위치이기 때문에 rowBounds는 세번째 위치에 넣어야한다. 
+     //파라미터가 없다고 해도 null을 채워서 자리를 맞춰 전달해야한다.
+     return (ArrayList) sqlSession.selectList("boardMapper.boardList",null,rowBounds); 
+  }
+  
+  public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
+     return sqlSession.update("boardMapper.increaseCount", bno);
+  }
+  
+  public Board boardDetail(SqlSessionTemplate sqlSession, int bno) {
+     return sqlSession.selectOne("boardMapper.boardDetail", bno);
+  }
+  
+  public int boardInsert(SqlSessionTemplate sqlSession, Board b) {
+     return sqlSession.insert("boardMapper.boardInsert", b); 
+  }
+     
+  
+    
+
+}
+*/

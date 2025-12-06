@@ -4,24 +4,20 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
   
 <configuration>
-   <settings>
-       <setting name="jdbcTypeForNull" value="NULL"></setting>
-       <setting name="mapUnderscoreToCamelCase" value="true"></setting>
-   </settings>
-   
-   <typeAliases>
-      <typeAlias type="com.kh.spring.member.model.vo.Member" alias="Member"></typeAlias>
-      <typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board"></typeAlias>
-   </typeAliases>
-   
-<mappers>
-   <mapper resource="mappers/member-mapper.xml"></mapper> 
-   <!-- 
-      classPath 기준으로 경로를 작성해야한다.
-      서블릿으로 게시판을 만들때는 src/main/webapp/WEB-INF/classes를 기준으로 xml 파일이 어디있는지를 봐야하는데
-      스프링에서는 target/classes를 기준으로 봐야한다. 
-   -->
-   <mapper resource="mappers/board-mapper.xml"></mapper>
-</mappers>   
-
-</configuration> 
+ 	<settings>
+ 		<setting name="jdbcTypeForNull" value="NULL"/>
+ 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+ 	</settings>
+ 	
+ 	<typeAliases>
+ 		<typeAlias type="com.kh.spring.member.model.vo.Member" alias="Member"/>
+ 		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board"/>
+ 	</typeAliases>
+ 	
+ 	<!-- 
+ 	<typeAliases>
+ 	   <typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board"/>
+ 	</typeAliases>
+ 	 -->
+ 	
+</configuration>

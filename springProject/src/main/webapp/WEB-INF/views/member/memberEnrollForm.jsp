@@ -27,7 +27,7 @@
 <body>
     
     <!-- 메뉴바 -->
-    <%@include file="/WEB-INF/views/common/menubar.jsp" %>
+    <%@ include file="/WEB-INF/views/common/menubar.jsp" %>
 
     <div class="content">
         <br><br>
@@ -35,7 +35,7 @@
             <h2>회원가입</h2>
             <br>
 
-            <form action="${contextRoot}/insert.me" method="post">
+            <form action="${contextRoot }/insert.me" method="post">
                 <div class="form-group">
                     <label for="inputId">* ID : </label>
                     <input type="text" class="form-control" id="inputId" placeholder="Please Enter ID" name="userId" required> <br>
@@ -44,7 +44,7 @@
                     <input type="password" class="form-control" id="inputPwd" placeholder="Please Enter Password" name="userPwd" required> <br>
 
                     <label for="checkPwd">* Password Check : </label>
-                    <input type="password" class="form-control" id="checkPwd" placeholder="Please Enter Password" name="checkPwd" required> <br>
+                    <input type="password" class="form-control" id="checkPwd" placeholder="Please Enter Password" required> <br>
 
                     <label for="userName">* Name : </label>
                     <input type="text" class="form-control" id="userName" placeholder="Please Enter Name" name="userName" required> <br>
@@ -53,7 +53,7 @@
                     <input type="text" class="form-control" id="email" placeholder="Please Enter Email" name="email"> <br>
 
                     <label for="age"> &nbsp; Age : </label>
-                    <input type="number" class="form-control" id="age" placeholder="Please Enter Age" name="age"> <br>
+                    <input type="number" class="form-control" id="age" placeholder="Please Enter Age" name="age" value="0"> <br>
 
                     <label for="phone"> &nbsp; Phone : </label>
                     <input type="tel" class="form-control" id="phone" placeholder="Please Enter Phone (-없이)" name="phone"> <br>
@@ -69,43 +69,35 @@
                 </div> 
                 <br>
                 <div class="btns" align="center">
-                    <button type="submit" class="btn btn-primary" onclick="return checking();">회원가입</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">회원가입</button>
                     <button type="reset" class="btn btn-danger">초기화</button>
                 </div>
             </form>
         </div>
         <br><br>
-
     </div>
+	
+	<script>
+		function validate(){
+			
+			let userPwd = document.querySelector("#inputPwd");
+			let checkPwd = document.querySelector("#checkPwd");
+			
+			
+			if(userPwd.value!=checkPwd.value){
+				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				
+				//기본 요청 막아주기
+				return false;
+			}
+		}
+	
+	</script>
+
+
 
     <!-- 푸터바 -->
-    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-    
-    <script>
-    
-      let inputPwd = document.querySelector(".form-group #inputPwd");
-      let checkPwd = document.querySelector("#checkPwd");
-      
-      //console.log(inputPwd);
-      //console.log(checkPwd); 
-      
-      function checking() {
-    	  if(checkPwd.value==inputPwd.value) {
-    		  
-    		  return true; //여기서 true가 나온다고 하더라도 복호화된 비번은 컨트롤러나 서비스에서 봐줘야함. 
-    	  }
-    	  
-    	  alert("비밀번호와 확인 비밀번호가 일치하지 않습니다."); 
-    	  return false; 
-      }
-      
-      /*
-      
-      
-      
-      */
-    
-    </script>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
 </html>

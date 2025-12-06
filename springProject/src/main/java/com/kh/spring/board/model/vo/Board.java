@@ -25,3 +25,16 @@ public class Board {
 	private String status; //게시글상태값					//	STATUS	VARCHAR2(1 BYTE)
 	
 }
+
+/*
+ * public class Board {
+ *     private int boardNo; // 게시글번호
+ *     private String boardTitle; // 게시글제목
+ *     private String boardWriter; // 게시글 작성자 아이디
+ *     private String boardContent; // 게시글 내용
+ *     private String originName; // 첨부파일 원래 이름
+ *     private String changeName; // 첨부파일 변경 이름
+ *     private int count; // 조회수
+ *     private Date createDate; // 게시글 작성 날짜
+ *     private String status; // 게시글상태값 
+ */
