@@ -15,6 +15,8 @@ public interface MemberService {
 	int deleteMember(String userId);
 	
 	//아이디 중복 확인 기능 (SELECT)
+	Member selectMember(String inputId); 
 	
+	//int idCheck(String inputId); 
 	
 }

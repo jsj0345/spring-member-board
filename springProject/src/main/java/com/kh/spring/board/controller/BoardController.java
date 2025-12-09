@@ -1,13 +1,12 @@
 package com.kh.spring.board.controller;
 
 import java.io.File;
-
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,10 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.board.model.service.BoardService;
 import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.model.vo.PageInfo;
 import com.kh.spring.common.template.Pagination;
 
@@ -490,6 +491,44 @@ public class BoardController {
 	}
 	
 	@PostMapping("/delete.bo")
+	public String boardDelete(Board b,HttpSession session,Model model) {
+
+		   String deleteFile = null;
+
+			if(b.getOriginName()!=null) { // 기존 첨부파일 명이 있으면 경로를 포함반 changeName으로 초기화를 해준다.
+				  deleteFile = b.getChangeName();
+				  
+				  System.out.println(deleteFile);
+			}
+
+			int result = service.boardDelete(b.getBoardNo());
+
+			if(result > 0) { // 삭제가 성공하면 데이터베이스엔 안 남는다.
+				 String path = session.getServletContext().getRealPath(deleteFile);
+
+				 new File(path).delete();
+				 
+				 session.setAttribute("alertMsg","게시글 삭제 성공!");
+                 /*
+				 model.addAttribute("alertMsg","게시글 삭제 성공!");
+				 여기서 모델에 객체를 담으면 list.bo에 맞는 컨트롤러로 간다고 하더라도 또 다른 view페이지로 넘어가기
+				 때문에 alertMsg의 정보가 없어진다. 따라서 session으로 담도록 한다. 
+                 */
+				 return "redirect:/list.bo"; // 이거 defaultValue가 1이라 현재페이지 1로 되는것. 
+
+			} else {
+
+				//model.addAttribute("alertMsg","게시글 삭제 실패!");
+				session.setAttribute("alertMsg","게시글 삭제 실패!");
+
+			    return "redirect:/detail.bo?bno="+b.getBoardNo();
+			}
+	}		
+
+	
+	
+	/* 강사님 코드 
+	@PostMapping("/delete.bo")
 	public String deleteBoard(int bno,String filePath,HttpSession session) {
 	
 		//게시글 삭제 요청 
@@ -513,6 +552,7 @@ public class BoardController {
 		}
 		
 	}
+	*/
 	
 	
 	//검색 메소드
@@ -551,6 +591,77 @@ public class BoardController {
 		
 		return "board/boardListView";
 	}
+	
+	/*
+	@ResponseBody
+	@RequestMapping(value="/selectList.re", produces="application/json;charset=UTF-8")
+	public ArrayList<Reply> replyList() {
+		
+		ArrayList<Reply> replyList = service.replyList();
+		
+		
+		return replyList; 
+		
+		
+	}
+	*/
+	
+	//댓글 목록 조회
+	@ResponseBody
+	@RequestMapping(value="/selectList.re", produces="application/json;charset=UTF-8")
+	public List<Reply> replyList(int refBno) {
+	   //참조 게시글 번호를 이용하여 해당 게시글에 작성된 댓글 목록 조회해오기
+	   
+	   List<Reply> list = service.replyList(refBno);
+	   
+	   //목록 반환
+	   return list; 
+	}
+	
+	//댓글 등록 컨트롤러
+	@ResponseBody
+	@RequestMapping(value="/insertReply.re", produces="text/plain;charset=UTF-8")
+	public String insertReply(Reply reply) {
+		int result = service.insertReply(reply);
+		
+		if(result > 0) {
+			return "댓글 등록 성공!";
+		} else {
+			return "댓글 등록 실패!";
+		}
+	}
+	
+	//게시글 조회수 1~5순위 갖고오는 컨트롤러
+	@ResponseBody
+	@RequestMapping(value="/topList.bo",produces="application/json;charset=UTF-8")
+	public ArrayList<Board> topList() {
+		
+		ArrayList<Board> boardList = service.topList(); //조회수가 높은 1~5순위 게시글 리스트 갖고오기
+		
+		//받을 데이터는 딱히 없으니 매개변수는 작성 할 필요가 없다.
+		
+		return boardList; 
+		
+	}
+	
+	
+	/*
+	@ResponseBody 
+	@RequestMapping(value="/insertReply.re", produces="application/json;charset=UTF-8")
+	public int insertReply(Reply reply) {
+	   int result = service.insertReply(reply); 
+	   
+	   if(result > 0) {
+	      return result; 
+	   } else {
+	      return result; 
+	   }
+	
+	}  
+	*/
+	
+	
+	
 	
 	
 	

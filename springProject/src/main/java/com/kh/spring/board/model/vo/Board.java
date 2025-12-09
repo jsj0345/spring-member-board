@@ -21,7 +21,7 @@ public class Board {
 	private String originName; //첨부파일원래이름					//	ORIGIN_NAME	VARCHAR2(100 BYTE)
 	private String changeName; //첨부파일변경이름					//	CHANGE_NAME	VARCHAR2(100 BYTE)
 	private int count; //조회수					//	COUNT	NUMBER
-	private Date createDate; //게시글작성날짜					//	CREATE_DATE	DATE
+	private String createDate; //게시글작성날짜					//	CREATE_DATE	DATE
 	private String status; //게시글상태값					//	STATUS	VARCHAR2(1 BYTE)
 	
 }

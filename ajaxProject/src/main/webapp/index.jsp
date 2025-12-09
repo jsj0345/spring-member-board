@@ -191,6 +191,89 @@
    
    </script>
    
+   <h3>4.조회 요청 후 조회된 데이터 여러개(목록) 처리해보기</h3>
+   
+   <button id="btn4">JSON으로 목록 조회</button>
+   <button id="btn5">GSON으로 목록 조회</button>
+   <button id="btn6">응답데이터 자체 목록 조회</button>
+   
+   <br>
+   
+   <table border="1" id="memberList">
+       <thead>
+            <tr>
+               <td>이름</td>
+               <td>나이</td>
+               <td>성별</td>
+               <td>이메일</td>
+            </tr>
+       </thead>
+       <tbody>
+       </tbody>
+   
+   </table>
+   
+   <script>
+        $("#btn4").click(function(){
+        	 $.ajax({
+        		 url : "selectList",
+        		 success : function(list){
+        			 
+        			 console.log(list);
+        			 
+        			 
+        		 },
+        		 
+        		 error : function(){
+        			 console.log("통신 실패");
+        		 },
+        	 })
+        });
+        
+        $("#btn5").click(function(){
+       	 $.ajax({
+       		 url : "selectList2",
+       		 success : function(list){
+       			 
+       			 console.log(list);
+       			 
+       			 
+       		 },
+       		 
+       		 error : function(){
+       			 console.log("통신 실패");
+       		 },
+       	 })
+       });
+        
+        $("#btn6").click(function(){
+          	 $.ajax({
+          		 url : "selectList3",
+          		 success : function(list){
+          			 
+          			 for(let m of list){
+          				 console.log(m);
+          				 
+          				 let tr = $("<tr>");
+          				 tr.append($("<td>").text(m.name),
+          						   $("<td>").text(m.age),
+          						   $("<td>").text(m.gender),
+          						   $("<td>").text(m.email));
+          				 
+          				 $("#memberList tbody").append(tr); 
+          				  
+          			 }
+          			 
+          			 
+          		 },
+          		 
+          		 error : function(){
+          			 console.log("통신 실패");
+          		 },
+          	 })
+          }); 
+   
+   </script>
    
 
 </body>

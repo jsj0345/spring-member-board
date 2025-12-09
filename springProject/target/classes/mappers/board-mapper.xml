@@ -18,8 +18,7 @@
   	    WHERE STATUS = 'Y'
   	  </select>   
   	-->
-  	
-  	
+  
   	<select id="boardList" resultType="Board">
   		SELECT BOARD_NO
   			  ,BOARD_TITLE
@@ -151,6 +150,11 @@
   		DELETE FROM BOARD
   		WHERE BOARD_NO = #{bno}
   	</delete>
+  	
+  	<delete id="boardDelete" parameterType="_int">
+  	    DELETE FROM BOARD
+  	    WHERE BOARD_NO = #{bno}
+  	</delete>
    
    <!-- 
    <update id="deleteBoard" parameterType="_int">
@@ -204,6 +208,68 @@
   		AND STATUS = 'Y'
   	
   	</select>
+  	
+  	<!--  
+  	<select id="replyList" resultType="Reply">
+  	    SELECT REPLY_NO
+  	           ,REPLY_CONTENT
+  	           ,REF_BNO
+  	           ,REPLY_WRITER
+  	           ,CREATE_DATE
+  	           ,STATUS
+  	    FROM REPLY
+  	    WHERE STATUS='Y'       
+  	
+  	</select>
+  	-->
+  	
+  	<select id="replyList" resultType="Reply" parameterType="_int">
+  	   SELECT REPLY_NO
+  	          ,REPLY_CONTENT
+  	          ,REPLY_WRITER
+  	          ,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') "CREATE_DATE"
+  	   FROM REPLY
+  	   WHERE REF_BNO = #{refBno}
+  	   AND STATUS = 'Y'
+  	   ORDER BY CREATE_DATE DESC        
+  	
+  	</select>
+  	
+  	<insert id="insertReply" parameterType="Reply">
+  	   INSERT INTO REPLY(REPLY_NO
+  	                     ,REPLY_CONTENT
+  	                     ,REPLY_WRITER
+  	                     ,REF_BNO)
+  	   VALUES(SEQ_RNO.NEXTVAL,#{replyContent},#{replyWriter},#{refBno})                  
+  	                     
+  	
+  	</insert>
+  	
+  	<select id="topList" parameterType="_int" resultType="Board">
+  	   SELECT BOARD_NO
+  	          ,BOARD_TITLE
+  	          ,BOARD_WRITER
+  	          ,COUNT
+  	          ,TO_CHAR(CREATE_DATE,'YYYY-MM-DD') "CREATE_DATE"
+  	          ,CREATE_DATE
+  	          ,ORIGIN_NAME
+  	   FROM BOARD
+  	   ORDER BY COUNT DESC   
+  	   <!-- 이때 모델 패키지에있는 board의 createDate 멤버 변수를 String형으로 바꾸자. -->
+  	</select>
+  	
+  	<!-- 
+  	<insert id="insertReply" parameterType="Reply">
+  	  INSERT INTO REPLY(REPLY_NO
+  	                    ,REPLY_CONTENT
+  	                    ,REF_BNO
+  	                    ,REPLY_WRITER)
+  	         VALUES(SEQ_RNO.NEXTVAL,#{replyContent},#{refBno},#{replyWriter})
+  	                      
+  	                    
+  	
+  	</insert>
+  	 -->
   
   
 </mapper>

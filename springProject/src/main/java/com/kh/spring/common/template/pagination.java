@@ -10,7 +10,9 @@ public class Pagination {
 	public static PageInfo getPageInfo(int listCount,int currentPage
 									  ,int boardLimit,int pageLimit) {
 		
-		int maxPage = (int)Math.ceil((double)listCount/boardLimit);
+		int maxPage = (int)Math.ceil((double)listCount/boardLimit); //나중에 페이징 바 처리할때 아래 페이징 바를 몇개를 설정할지 정해야한다.
+		//이때 정하고나서 그 개수만큼 버튼을 만들면된다. jsp파일을 보면 버튼 pi.startPage,maxPage만큼
+		//버튼 개수를 만듬 따라서 그때 용도로 쓴다고 생각하면 된다. 
 		int startPage = (currentPage-1)/pageLimit*pageLimit+1;
 		int endPage = startPage+pageLimit-1;
 		

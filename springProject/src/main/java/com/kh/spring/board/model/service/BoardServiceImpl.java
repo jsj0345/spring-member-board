@@ -1,8 +1,8 @@
 package com.kh.spring.board.model.service;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.spring.board.model.dao.BoardDao;
 import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.model.vo.PageInfo;
 
 @Service
@@ -66,6 +67,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
+	public int boardDelete(int bno) {
+		return dao.boardDelete(sqlSession,bno);
+	}
+	
+	@Override
 	public ArrayList<Board> searchList(HashMap<String, String> map,PageInfo pi) {
 	
 		return dao.searchList(sqlSession,map,pi);
@@ -77,6 +83,27 @@ public class BoardServiceImpl implements BoardService{
 		return dao.searchListCount(sqlSession,map);
 	}
 	
+	/*
+	@Override
+	public ArrayList<Reply> replyList() {
+		return dao.replyList(sqlSession);
+	}
+	*/
+	
+	@Override
+	public List<Reply> replyList(int refBno) {
+		return dao.replyList(sqlSession,refBno);
+	}
+	
+	@Override
+	public int insertReply(Reply reply) {
+		return dao.insertReply(sqlSession,reply); 
+	}
+	
+	@Override
+	public ArrayList<Board> topList() {
+		return dao.topList(sqlSession); 
+	}
 	
 	
 }
@@ -134,6 +161,13 @@ public class BoardServiceImpl implements BoardService {
       
       return result;
    }   
+   
+   @Override
+   public int insertReply(Reply reply) {
+     int result = dao.insertReply(sqlSession,reply);
+     
+     return result; 
+  }
    
 
 }

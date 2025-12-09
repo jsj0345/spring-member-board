@@ -2,12 +2,14 @@ package com.kh.spring.board.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.model.vo.PageInfo;
 
 
@@ -61,6 +63,10 @@ public class BoardDao {
 		
 		return sqlSession.delete("boardMapper.deleteBoard",bno);
 	}
+	
+	public int boardDelete(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.delete("boardMapper.boardDelete",bno); 
+	}
 
 	public ArrayList<Board> searchList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
 		
@@ -80,6 +86,33 @@ public class BoardDao {
 	public int searchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
 		return sqlSession.selectOne("boardMapper.searchListCount",map);
+	}
+
+	/*
+	public ArrayList<Reply> replyList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.replyList"); 
+	}
+	*/
+	
+	//댓글 목록 조회
+	public List<Reply> replyList(SqlSessionTemplate sqlSession, int refBno) {
+		return sqlSession.selectList("boardMapper.replyList",refBno);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, Reply reply) {
+		return sqlSession.insert("boardMapper.insertReply",reply); 
+	}
+
+	public ArrayList<Board> topList(SqlSessionTemplate sqlSession) {
+		
+		
+		int limit = 5;
+		int offset = 0; 
+		
+		RowBounds rowBounds = new RowBounds(offset,limit); 
+		
+		
+		return (ArrayList) sqlSession.selectList("boardMapper.topList",null,rowBounds); 
 	}
 
 }
@@ -115,6 +148,10 @@ public class BoardDao {
   
   public int boardInsert(SqlSessionTemplate sqlSession, Board b) {
      return sqlSession.insert("boardMapper.boardInsert", b); 
+  }
+  
+  public int insertReply(SqlSessionTemplate sqlSession, Reply reply) {
+     return sqlSession.insert("boardMapper.insertReply", reply); 
   }
      
   

@@ -199,12 +199,12 @@
 			<!-- 
 				검색 후 선택상자 선택시켜놓기 
 			 -->
-			<c:if test="${not empty map }">
+			 <c:if test="${not empty map }">
 				<script>
 					$(function(){
 						//검색 condition 유지 
 						$("option[value=${map.condition}]").attr("selected",true);
-						
+					
 // 						let condition = "${map.condition}";
 // 						$(".custom-select>option").each(function(){
 // 							if($(this).val()==condition){
@@ -216,9 +216,15 @@
 					});
 				</script>
 			</c:if>
+
+			 
+			
 			
 			
             <form id="searchForm" action="${contextRoot }/search.bo" method="get" align="center">
+                <!-- method="get"이니까 쿼리스트링에 값이 다 담겨있다.
+                     search.bo?condition=?&keyword=?  
+                 -->
                 <div class="select">
                     <select class="custom-select" name="condition">
                         <option value="writer">작성자</option>
@@ -227,7 +233,7 @@
                     </select>
                 </div>
                 <div class="text">
-                    <input type="text" class="form-control" name="keyword" value="${map.keyword }">
+                    <input type="text" class="form-control" name="keyword" value="${map.keyword}">
                 </div>
                 <button type="submit" class="searchBtn btn btn-secondary">검색</button>
             </form>
@@ -236,6 +242,8 @@
         <br><br>
 
     </div>
+    
+    
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

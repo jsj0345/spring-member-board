@@ -2,8 +2,10 @@ package com.kh.spring.board.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.model.vo.PageInfo;
 
 public interface BoardService {
@@ -29,11 +31,21 @@ public interface BoardService {
 	//게시글 삭제
 	int deleteBoard(int bno);
 	
+	//게시글 삭제2
+	int boardDelete(int bno);
+	
 	//게시글 검색
 	ArrayList<Board> searchList(HashMap<String, String> map, PageInfo pi);
 	
 	//검색 게시글 개수
 	int searchListCount(HashMap<String, String> map);
+
+	//ArrayList<Reply> replyList();
+	List<Reply> replyList(int refBno);
+
+	int insertReply(Reply reply);
+
+	ArrayList<Board> topList();
 	
 
 }

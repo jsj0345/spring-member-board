@@ -1,5 +1,9 @@
 package com.kh.ajax;
 
+import java.util.ArrayList;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -130,6 +134,108 @@ public class HomeController {
 	
 		return m; // json 객체를 문자열로 변환해주는 메소드  
 			
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/selectList", produces="application/json;charset=UTF-8")
+	public String selectList() {
+		Member m = new Member("김유저","남자",25,"user01@gmail.com");
+		Member m2 = new Member("박사원","여자",35,"sawon@naver.com");
+		Member m3 = new Member("최학생","남자",20,"student@gmail.com");
+		
+		ArrayList<Member> list = new ArrayList<>();
+		list.add(m);
+		list.add(m2);
+		list.add(m3);
+		
+		//위에 있는 목록을 데이터베이스에서 조회해왔다고 가정하고 진행
+		//JSON화 시켜서 응답데이터로 보내기
+		/*
+		JSONObject jobj = new JSONObject();
+		jobj.put("name", m.getName());
+		jobj.put("gender", m.getGender());
+		jobj.put("age", m.getAge());
+		jobj.put("email", m.getEmail());
+		
+		JSONObject jobj2 = new JSONObject();
+		jobj.put("name", m2.getName());
+		jobj.put("gender", m2.getGender());
+		jobj.put("age", m2.getAge());
+		jobj.put("email", m2.getEmail());
+		
+		JSONObject jobj3 = new JSONObject();
+		jobj.put("name", m3.getName());
+		jobj.put("gender", m3.getGender());
+		jobj.put("age", m3.getAge());
+		jobj.put("email", m3.getEmail());
+		
+		//JSONArray에 목록 넣어주기
+		JSONArray jArr = new JSONArray();
+		jArr.add(jobj);
+		jArr.add(jobj2);
+		jArr.add(jobj3);
+		
+		위 작업을 반복문으로 줄여보기 
+		*/
+		
+		//목록 넣을 JSONArray 준비
+		JSONArray jArr = new JSONArray();
+		for(Member mem : list) { //담겨있는 모든 데이터 접근
+			
+			//각 객체정보는 JSONObject에 넣어서 목록에 추가하기
+			JSONObject jobj = new JSONObject();
+			
+			jobj.put("name", mem.getName());
+			jobj.put("gender", mem.getGender());
+			jobj.put("age", mem.getAge());
+			jobj.put("email", mem.getEmail());
+			
+			jArr.add(jobj); 
+			
+			
+		}
+		
+		//toJSONString 메소드로 문자열화 시키기 
+		return jArr.toJSONString();
+		
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/selectList2", produces="application/json;charset=UTF-8")
+	public String selectList2() {
+		Member m = new Member("김유저","남자",25,"user01@gmail.com");
+		Member m2 = new Member("박사원","여자",35,"sawon@naver.com");
+		Member m3 = new Member("최학생","남자",20,"student@gmail.com");
+		
+		ArrayList<Member> list = new ArrayList<>();
+		list.add(m);
+		list.add(m2);
+		list.add(m3);
+		
+		//GSON 이용하여 반환하기
+		//GSON이 제공하는 toJSON 메소드로 간단하게 처리
+		//GSON.toJSON(객체); 전달된 객체를 json화 시킨후 문자열 처리 해주는 메소드
+		
+		
+		
+		return new Gson().toJson(list);
+	}	
+	
+	@ResponseBody
+	@RequestMapping(value="/selectList3", produces="application/json;charset=UTF-8")
+	public ArrayList<Member> selectList3() {
+		Member m = new Member("김유저","남자",25,"user01@gmail.com");
+		Member m2 = new Member("박사원","여자",35,"sawon@naver.com");
+		Member m3 = new Member("최학생","남자",20,"student@gmail.com");
+		
+		ArrayList<Member> list = new ArrayList<>();
+		list.add(m);
+		list.add(m2);
+		list.add(m3);
+		
+		return list; 
 	}
 	
 	

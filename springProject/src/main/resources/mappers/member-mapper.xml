@@ -21,6 +21,30 @@
   		<result column="STATUS" property="status"/>
   	</resultMap>
   	 -->
+  	<select id="selectMember" parameterType="String"  resultType="Member">
+  	   SELECT   USER_ID
+		        ,USER_PWD
+		        ,USER_NAME
+		        ,EMAIL
+		        ,GENDER
+		        ,AGE
+		        ,PHONE
+		        ,ADDRESS
+		        ,MODIFY_DATE
+		        ,ENROLL_DATE
+		        ,STATUS
+		FROM MEMBER
+		WHERE USER_ID = #{inputId}
+		AND STATUS = 'Y' 
+  	
+  	</select>
+  	
+  	<!-- 
+  	<select id="idCheck" parameterType="string" resultType="_int">
+  	   SELECT COUNT(*)
+  	   FROM MEMBER
+  	   WHERE USER_ID = #{inputId} 
+  	 -->
   	
   	
   	<select id="loginMember" resultType="Member">

@@ -32,6 +32,16 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMember",m);
 	}
 	
+	public Member selectMember(SqlSessionTemplate sqlSession, String inputId) {
+		return sqlSession.selectOne("memberMapper.selectMember",inputId); 
+	}
+	
+	/*
+	 * public int idCheck(SqlSessionTemplate sqlSession, String inputId) {
+	 *   return sqlSession.selectOne("memberMapper.idCheck",inputId); 
+	 * }
+	 */
+	
 	
 	
 	

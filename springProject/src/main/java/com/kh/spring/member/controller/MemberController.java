@@ -1,7 +1,5 @@
 package com.kh.spring.member.controller;
 
-import java.io.UnsupportedEncodingException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.spring.member.model.service.MemberService;
 import com.kh.spring.member.model.vo.Member;
@@ -157,6 +156,8 @@ public class MemberController {
 		Member loginMember = service.loginMember(m);
 		//위에 조회된 loginMember가 null 이 아닌 경우에만 비밀번호 검증 처리하기 
 		
+		System.out.println(loginMember);
+		
 		//null이 아니고 판별이 true라면 성공
 		if(loginMember!=null && bcrypt.matches(m.getUserPwd(), loginMember.getUserPwd())) {
 			session.setAttribute("alertMsg", "로그인 성공!"); 
@@ -299,6 +300,60 @@ public class MemberController {
 		return "redirect:mypage.me";
 		
 	}
+	
+	//회원 중복 체크
+	@RequestMapping(value="/idcheck.me", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String idCheck(String inputId) {
+		
+		Member m = service.selectMember(inputId); // 데이터베이스에서 회원 조회 
+		
+		if(m!=null) {
+			
+		  return "NNNNN";
+			
+		} 
+		
+		return "NNNNY"; 
+		
+		/*
+		 * int count = service.idCheck(inputId); 
+		 * 
+		 * if(count>0) {
+		 *    return "NNNNN";
+		 * } else {
+		 *    return "NNNNY";   
+		 * }   
+		 */
+		
+	}
+	
+	/*
+	 * 
+	 * 
+	 * @ResponseBody
+	 * @RequestMapping("/idcheck.me")
+	 * public int idcheck(String inputId) {
+	 * 
+	 *   int result = service.idcheck(inputId);
+	 *   
+	 *   if(result > 0) {
+	 *      return "NNNNN";
+	 *   } else {
+	 *      return "NNNNY"; 
+	 *   }
+	 * 
+	 * }
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
+	
+	
+	
 	
 	
 	
