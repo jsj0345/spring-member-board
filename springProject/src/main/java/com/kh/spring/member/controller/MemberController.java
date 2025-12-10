@@ -156,7 +156,9 @@ public class MemberController {
 		Member loginMember = service.loginMember(m);
 		//위에 조회된 loginMember가 null 이 아닌 경우에만 비밀번호 검증 처리하기 
 		
-		System.out.println(loginMember);
+		
+		
+		//model.addAttribute("loginMember", loginMember); 
 		
 		//null이 아니고 판별이 true라면 성공
 		if(loginMember!=null && bcrypt.matches(m.getUserPwd(), loginMember.getUserPwd())) {

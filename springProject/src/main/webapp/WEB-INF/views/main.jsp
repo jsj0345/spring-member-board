@@ -19,7 +19,14 @@
        매핑주소 topList.bo
        메소드명 topList()
        tbody에 목록화 후 해당 글을 클릭했을때 상세보기 페이지로 이동하기까지 구현 해보기 
-    -->
+   -->
+   
+   <hr>
+        <button onclick="location.href='${contextRoot}/websocket/basic'">기본 채팅 서버</button>
+        <button onclick="location.href='${contextRoot}/websocket/group'">그룹 채팅 서버</button>
+        <button onclick="location.href='${contextRoot}/websocket/member'">멤버 채팅 서버</button>
+   <hr> 
+    
    <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">

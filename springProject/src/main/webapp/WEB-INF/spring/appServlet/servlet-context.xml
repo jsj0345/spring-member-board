@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -29,7 +31,7 @@
               <!-- /* : 첫번째 레벨 전체 요청(컨텍스트 루트 다음), /** : 추가 레벨까지 전체 요청-->
               <!-- <mapping path="/*"/> mapping path : 어떠한 요청에 동작시킬것인지 정하는 태그 -->
 <!-- 	             <mapping path="/mypage.me"/> -->
-	             	 <mapping path="/*.me"/>  <!--.me로 끝나는 모든 요청에 대해서 처리-->  
+	             	 <mapping path="/*.me"/>  <!-- .me로 끝나는 모든 요청에 대해서 처리   --> 
 	             	<mapping path="/*.bo"/>
 	             <exclude-mapping path="/list.bo"/>
 	             <exclude-mapping path="/topList.bo"/>
@@ -67,6 +69,36 @@
 <!-- 	      </interceptor> -->
 	
 	</interceptors>
+	
+	<!-- 웹 소켓 서버 등록 -->
+    <beans:bean class="com.kh.spring.websocket.server.BasicServer" id="basic"></beans:bean>
+    <beans:bean class="com.kh.spring.websocket.server.GroupServer" id="group"></beans:bean>
+    <beans:bean class="com.kh.spring.websocket.server.MemberServer" id="member"></beans:bean>
+	<!-- 웹 소켓 서버 클래스 풀경로 id값은 해당 웹소켓 서버의 임의의 아이디값 -->
+	
+	<!-- 웹 소켓 접속 대상지정 - 요청에 따라 어떤 서버가 응답할 것인지 설정하기, 하단에 Namespaces에 등록하기  -->
+    <websocket:handlers> <!-- 웹 소켓 관련된거 처리 -> handler -->
+         <!-- 기존 요청 방식 : http://localhost:8080/spring~~~~~ 
+             웹 소켓 요청 방식 : ws://localhost:8080/spring~~~~
+             
+         -->
+         
+         <!-- handler : 어떠한 서버가 path요청시 처리할것인지 등록 -->
+         <!-- 서버에 등록한 id를 handler로 ws://localhost:8080/basic~~  -->
+         <websocket:mapping handler="basic" path="/basic"/>
+         <websocket:mapping handler="group" path="/group"/>
+         <websocket:mapping handler="member" path="/member"/>
+         
+         <!-- HTTP 통신으로 요청되어진 HttpSession 정보를 접근위한 설정 -->
+         <websocket:handshake-interceptors>
+            <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/> 
+         </websocket:handshake-interceptors>
+         
+         
+         
+    
+    </websocket:handlers>
+	
 	
 	<!-- 파일 업로드 처리용 MultiResolver 등록하기 -->
 	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
